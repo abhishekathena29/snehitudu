@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../models/news_item.dart';
 import '../../services/auth_service.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/app_logo.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -98,6 +99,43 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ];
 
+    final gameCards = <({
+      String title,
+      String description,
+      String route,
+      IconData icon,
+      Color color,
+    })>[
+      (
+        title: 'Memory Match',
+        description: 'Remember four gentle prompts',
+        route: '/engagement/memory-games',
+        icon: Ionicons.sparkles_outline,
+        color: const Color(0xFF4ECDC4),
+      ),
+      (
+        title: 'Number Trail',
+        description: 'Fill in the next number',
+        route: '/engagement/puzzle-games',
+        icon: Ionicons.grid_outline,
+        color: const Color(0xFF45B7D1),
+      ),
+      (
+        title: 'Word Builder',
+        description: 'Unscramble a familiar word',
+        route: '/engagement/word-games',
+        icon: Ionicons.text_outline,
+        color: const Color(0xFF96CEB4),
+      ),
+      (
+        title: 'Logic Pick',
+        description: 'Choose the best answer',
+        route: '/engagement/logic-games',
+        icon: Ionicons.calculator_outline,
+        color: const Color(0xFFFFC857),
+      ),
+    ];
+
     final greeting = () {
       final hour = DateTime.now().hour;
       if (hour < 12) return 'Morning';
@@ -145,6 +183,37 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 24),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: colors.tint.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  children: [
+                    const AppLogo(size: 56),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Ready for a calm, active day?',
+                            style: TextStyle(color: colors.text, fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Start with a daily challenge or pick a short game.',
+                            style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 24),
               Text(
@@ -197,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Expanded(
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        _showDialog(context, 'Challenge', 'Daily challenge feature coming soon!');
+                        context.go('/engagement');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.tint,
@@ -221,6 +290,72 @@ class _HomeScreenState extends State<HomeScreen> {
                       label: const Text('Read News', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
                     ),
                   ),
+                ],
+              ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Mini Games',
+                    style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    onPressed: () => context.go('/engagement'),
+                    child: Text('Open All', style: TextStyle(color: colors.tint, fontWeight: FontWeight.w600)),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                children: [
+                  for (final game in gameCards)
+                    InkWell(
+                      onTap: () => context.push(game.route),
+                      borderRadius: BorderRadius.circular(16),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.42,
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: colors.background,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: game.color.withOpacity(0.35)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.06),
+                              blurRadius: 8,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 44,
+                              height: 44,
+                              decoration: BoxDecoration(
+                                color: game.color.withOpacity(0.18),
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              child: Icon(game.icon, color: game.color),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              game.title,
+                              style: TextStyle(color: colors.text, fontSize: 14, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              game.description,
+                              style: TextStyle(color: colors.icon, fontSize: 12, height: 1.4),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                 ],
               ),
               const SizedBox(height: 30),
@@ -326,22 +461,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  void _showDialog(BuildContext context, String title, String message) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
       ),
     );
   }

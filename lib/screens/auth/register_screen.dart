@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 
 import '../../services/auth_service.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/app_logo.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -121,8 +122,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Column(
                     children: [
                       const SizedBox(height: 8),
-                      Icon(Ionicons.person_add, size: 80, color: colors.tint),
-                      const SizedBox(height: 24),
+                      const AppLogo(size: 96, showBadge: true),
+                      const SizedBox(height: 20),
                       Text(
                         'Create Account',
                         style: TextStyle(
@@ -134,7 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Join Elderly Companion to stay connected',
+                        'Join Snehitudu to stay connected',
                         style: TextStyle(color: colors.icon, fontSize: 16, height: 1.5),
                         textAlign: TextAlign.center,
                       ),

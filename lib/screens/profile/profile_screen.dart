@@ -36,7 +36,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog<void>(
       context: context,
       builder: (context) {
-        final colors = AppThemeColors.of(context);
         return AlertDialog(
           title: Text('Edit ${_titleCase(field)}'),
           content: TextField(
@@ -57,7 +56,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 final user = _localUser;
                 if (user == null) return;
                 AppUser updated;
-                if (field == 'age') {
+                if (field == 'name') {
+                  updated = user.copyWith(name: value);
+                } else if (field == 'age') {
                   updated = user.copyWith(age: int.tryParse(value) ?? user.age);
                 } else if (field == 'emergencyContact') {
                   updated = user.copyWith(emergencyContact: value);
@@ -116,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Text('Profile', style: TextStyle(color: colors.text, fontSize: 24, fontWeight: FontWeight.bold)),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => _editField('name', user.name),
                     icon: Icon(Ionicons.create_outline, color: colors.tint),
                   ),
                 ],
@@ -137,7 +138,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Icon(Ionicons.person, color: colors.tint, size: 48),
                         ),
                         const SizedBox(height: 16),
-                        Text(user.name, style: TextStyle(color: colors.text, fontSize: 24, fontWeight: FontWeight.bold)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                user.name,
+                                style: TextStyle(color: colors.text, fontSize: 24, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () => _editField('name', user.name),
+                              icon: Icon(Ionicons.create_outline, color: colors.tint, size: 18),
+                              tooltip: 'Edit username',
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 4),
                         Text(user.email, style: TextStyle(color: colors.icon, fontSize: 16)),
                         if ((user.age ?? 0) > 0)
@@ -165,6 +182,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Text('Personal Information', style: TextStyle(color: colors.text, fontSize: 18, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 16),
                           _InfoRow(
+                            icon: Ionicons.person_outline,
+                            label: 'Username',
+                            value: user.name,
+                            colors: colors,
+                            onTap: () => _editField('name', user.name),
+                          ),
+                          _InfoRow(
                             icon: Ionicons.call_outline,
                             label: 'Emergency Contact',
                             value: user.emergencyContact ?? 'Tap to add',
@@ -189,39 +213,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Column(
-                      children: [
-                        ElevatedButton.icon(
-                          onPressed: () => _showMessage('Help', 'Help and support feature coming soon!'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: colors.tint,
-                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          ),
-                          icon: const Icon(Ionicons.help_circle_outline, color: Colors.white, size: 20),
-                          label: const Text('Help & Support', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
-                        ),
-                        const SizedBox(height: 12),
-                        ElevatedButton.icon(
-                          onPressed: () => _showMessage('Privacy', 'Privacy settings feature coming soon!'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: colors.tint,
-                            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          ),
-                          icon: const Icon(Ionicons.shield_outline, color: Colors.white, size: 20),
-                          label: const Text('Privacy Settings', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
                     OutlinedButton.icon(
                       onPressed: () async {
+                        final authService = context.read<AuthService>();
+                        final router = GoRouter.of(context);
                         final confirmed = await _confirmLogout();
-                        if (confirmed) {
-                          await context.read<AuthService>().logout();
-                          if (mounted) context.go('/login');
-                        }
+                        if (!confirmed || !mounted) return;
+                        await authService.logout();
+                        if (!mounted) return;
+                        router.go('/login');
                       },
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),

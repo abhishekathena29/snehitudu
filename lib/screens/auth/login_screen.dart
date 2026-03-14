@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 
 import '../../services/auth_service.dart';
 import '../../theme/app_theme.dart';
+import '../../widgets/app_logo.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -88,8 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 24),
               Column(
                 children: [
-                  Icon(Ionicons.heart, size: 80, color: colors.tint),
-                  const SizedBox(height: 24),
+                  const AppLogo(size: 96, showBadge: true),
+                  const SizedBox(height: 20),
                   Text(
                     'Welcome Back',
                     style: TextStyle(
@@ -101,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Sign in to your Elderly Companion account',
+                    'Sign in to your Snehitudu account',
                     style: TextStyle(color: colors.icon, fontSize: 16, height: 1.5),
                     textAlign: TextAlign.center,
                   ),

@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "383134210909",
+    "project_id": "elderly-companion-app",
+    "storage_bucket": "elderly-companion-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383134210909:android:a017e82ea52c6eca07e6b4",
+        "android_client_info": {
+          "package_name": "com.example.snehitudu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383134210909-055td26e25ei2knovnup1bghja4q2of3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoNuN9H63AymB7DqIVXlJW1COtEKwIhAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383134210909-055td26e25ei2knovnup1bghja4q2of3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "383134210909-1jr4v8o616q0q6052lriklhkf3rai1gh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.snehitudu"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383134210909:android:eb764eddc115ff9c07e6b4",
+        "android_client_info": {
+          "package_name": "com.snehitudu.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383134210909-055td26e25ei2knovnup1bghja4q2of3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoNuN9H63AymB7DqIVXlJW1COtEKwIhAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383134210909-055td26e25ei2knovnup1bghja4q2of3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "383134210909-1jr4v8o616q0q6052lriklhkf3rai1gh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.snehitudu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

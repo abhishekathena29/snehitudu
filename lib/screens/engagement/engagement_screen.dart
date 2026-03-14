@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../theme/app_theme.dart';
+import '../../widgets/app_logo.dart';
 
 class EngagementScreen extends StatelessWidget {
   const EngagementScreen({super.key});
@@ -22,43 +23,35 @@ class EngagementScreen extends StatelessWidget {
       ),
       _EngagementFeature(
         id: 'memory-games',
-        title: 'Memory Games',
-        description: 'Train your memory with fun games',
-        icon: Ionicons.fitness_outline,
+        title: 'Memory Match',
+        description: 'Short memory rounds with familiar words',
+        icon: Ionicons.sparkles_outline,
         color: const Color(0xFF4ECDC4),
         route: '/engagement/memory-games',
       ),
       _EngagementFeature(
         id: 'puzzle-games',
-        title: 'Puzzle Games',
-        description: 'Solve puzzles and brain teasers',
+        title: 'Number Trail',
+        description: 'Find the next number in a calm sequence',
         icon: Ionicons.grid_outline,
         color: const Color(0xFF45B7D1),
         route: '/engagement/puzzle-games',
       ),
       _EngagementFeature(
         id: 'word-games',
-        title: 'Word Games',
-        description: 'Expand your vocabulary with word games',
+        title: 'Word Builder',
+        description: 'Unscramble everyday words with clear choices',
         icon: Ionicons.text_outline,
         color: const Color(0xFF96CEB4),
         route: '/engagement/word-games',
       ),
       _EngagementFeature(
         id: 'logic-games',
-        title: 'Logic Games',
-        description: 'Improve logical thinking skills',
+        title: 'Logic Pick',
+        description: 'Answer a simple question with one right option',
         icon: Ionicons.calculator_outline,
         color: const Color(0xFFFFEAA7),
         route: '/engagement/logic-games',
-      ),
-      _EngagementFeature(
-        id: 'progress-tracker',
-        title: 'Progress Tracker',
-        description: 'View your improvement over time',
-        icon: Ionicons.trending_up_outline,
-        color: const Color(0xFFDDA0DD),
-        route: '/engagement/progress',
       ),
     ];
 
@@ -83,12 +76,7 @@ class EngagementScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    Container(
-                      width: 48,
-                      height: 48,
-                      decoration: BoxDecoration(color: colors.tint, shape: BoxShape.circle),
-                      child: const Icon(Ionicons.trophy, color: Colors.white),
-                    ),
+                    const AppLogo(size: 48),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Column(
@@ -123,13 +111,7 @@ class EngagementScreen extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.44,
                       child: InkWell(
-                        onTap: () {
-                          if (feature.id == 'daily-challenge') {
-                            context.push(feature.route);
-                          } else {
-                            _showDialog(context, 'Coming Soon!', 'This feature will be available in the next update.');
-                          }
-                        },
+                        onTap: () => context.push(feature.route),
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
@@ -161,16 +143,6 @@ class EngagementScreen extends StatelessWidget {
                                   Text(feature.description, style: TextStyle(color: colors.icon, fontSize: 12, height: 1.3)),
                                 ],
                               ),
-                              if (feature.id != 'daily-challenge')
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                    decoration: BoxDecoration(color: const Color(0xFFFF9800), borderRadius: BorderRadius.circular(8)),
-                                    child: const Text('Coming Soon', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w600)),
-                                  ),
-                                ),
                             ],
                           ),
                         ),
@@ -196,19 +168,6 @@ class EngagementScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  void _showDialog(BuildContext context, String title, String message) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK')),
-        ],
       ),
     );
   }

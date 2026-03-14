@@ -34,7 +34,8 @@ class _ElderlyCompanionAppState extends State<ElderlyCompanionApp> {
     return ChangeNotifierProvider<AuthService>.value(
       value: _authService,
       child: MaterialApp.router(
-        title: 'Elderly Companion',
+        debugShowCheckedModeBanner: false,
+        title: 'Snehitudu',
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,

@@ -5,6 +5,7 @@ import '../screens/auth/login_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/engagement/daily_challenge_screen.dart';
 import '../screens/engagement/engagement_screen.dart';
+import '../screens/engagement/mini_game_screen.dart';
 import '../screens/explore/article_screen.dart';
 import '../screens/explore/explore_screen.dart';
 import '../screens/home/home_screen.dart';
@@ -84,6 +85,22 @@ class AppRouter {
                   GoRoute(
                     path: 'daily-challenge',
                     builder: (context, state) => const DailyChallengeScreen(),
+                  ),
+                  GoRoute(
+                    path: 'memory-games',
+                    builder: (context, state) => const MiniGameScreen(type: MiniGameType.memory),
+                  ),
+                  GoRoute(
+                    path: 'puzzle-games',
+                    builder: (context, state) => const MiniGameScreen(type: MiniGameType.puzzle),
+                  ),
+                  GoRoute(
+                    path: 'word-games',
+                    builder: (context, state) => const MiniGameScreen(type: MiniGameType.word),
+                  ),
+                  GoRoute(
+                    path: 'logic-games',
+                    builder: (context, state) => const MiniGameScreen(type: MiniGameType.logic),
                   ),
                 ],
               ),
