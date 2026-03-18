@@ -70,14 +70,16 @@ class ExploreScreen extends StatelessWidget {
       const NewsItem(
         id: '1',
         title: 'New Study Shows Benefits of Daily Walking for Seniors',
-        summary: 'Research indicates that 30 minutes of daily walking can improve cardiovascular health and cognitive function in older adults.',
+        summary:
+            'Research indicates that 30 minutes of daily walking can improve cardiovascular health and cognitive function in older adults.',
         category: 'health',
         readTime: '3 min read',
       ),
       const NewsItem(
         id: '2',
         title: 'Spring Gardening Tips for Beginners',
-        summary: 'Learn the best practices for starting your garden this spring, from soil preparation to plant selection.',
+        summary:
+            'Learn the best practices for starting your garden this spring, from soil preparation to plant selection.',
         category: 'gardening',
         readTime: '5 min read',
         isBookmarked: true,
@@ -85,21 +87,24 @@ class ExploreScreen extends StatelessWidget {
       const NewsItem(
         id: '3',
         title: 'Easy Mediterranean Recipes for Heart Health',
-        summary: 'Discover simple and delicious Mediterranean dishes that are perfect for maintaining heart health.',
+        summary:
+            'Discover simple and delicious Mediterranean dishes that are perfect for maintaining heart health.',
         category: 'cooking',
         readTime: '4 min read',
       ),
       const NewsItem(
         id: '4',
         title: 'Top 5 Accessible Travel Destinations for 2024',
-        summary: 'Explore senior-friendly travel destinations that offer comfort, accessibility, and unforgettable experiences.',
+        summary:
+            'Explore senior-friendly travel destinations that offer comfort, accessibility, and unforgettable experiences.',
         category: 'travel',
         readTime: '6 min read',
       ),
       const NewsItem(
         id: '5',
         title: 'How to Use Video Calling Apps to Stay Connected',
-        summary: 'A beginner-friendly guide to using video calling apps to stay in touch with family and friends.',
+        summary:
+            'A beginner-friendly guide to using video calling apps to stay in touch with family and friends.',
         category: 'technology',
         readTime: '4 min read',
         isBookmarked: true,
@@ -110,16 +115,23 @@ class ExploreScreen extends StatelessWidget {
       const HobbyItem(
         id: '1',
         title: 'Watercolor Painting',
-        description: 'Express your creativity with gentle watercolor techniques perfect for beginners.',
+        description:
+            'Express your creativity with gentle watercolor techniques perfect for beginners.',
         category: 'creative',
         difficulty: 'beginner',
         timeRequired: '1-2 hours',
-        materials: ['Watercolor set', 'Brushes', 'Watercolor paper', 'Water container'],
+        materials: [
+          'Watercolor set',
+          'Brushes',
+          'Watercolor paper',
+          'Water container',
+        ],
       ),
       const HobbyItem(
         id: '2',
         title: 'Bird Watching',
-        description: 'Connect with nature by observing local bird species in your backyard or nearby parks.',
+        description:
+            'Connect with nature by observing local bird species in your backyard or nearby parks.',
         category: 'outdoor',
         difficulty: 'beginner',
         timeRequired: '30-60 minutes',
@@ -128,7 +140,8 @@ class ExploreScreen extends StatelessWidget {
       const HobbyItem(
         id: '3',
         title: 'Knitting',
-        description: 'Create warm, handmade items while improving hand-eye coordination and reducing stress.',
+        description:
+            'Create warm, handmade items while improving hand-eye coordination and reducing stress.',
         category: 'creative',
         difficulty: 'beginner',
         timeRequired: '1-3 hours',
@@ -137,7 +150,8 @@ class ExploreScreen extends StatelessWidget {
       const HobbyItem(
         id: '4',
         title: 'Photography',
-        description: 'Capture beautiful moments and memories with your smartphone or camera.',
+        description:
+            'Capture beautiful moments and memories with your smartphone or camera.',
         category: 'creative',
         difficulty: 'beginner',
         timeRequired: '30 minutes - 2 hours',
@@ -146,7 +160,8 @@ class ExploreScreen extends StatelessWidget {
       const HobbyItem(
         id: '5',
         title: 'Book Club',
-        description: 'Join a local or virtual book club to discuss literature and make new friends.',
+        description:
+            'Join a local or virtual book club to discuss literature and make new friends.',
         category: 'social',
         difficulty: 'beginner',
         timeRequired: '1-2 hours weekly',
@@ -163,15 +178,36 @@ class ExploreScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 24),
-              Text('Explore', style: TextStyle(color: colors.text, fontSize: 28, fontWeight: FontWeight.bold)),
+              Text(
+                'Explore',
+                style: TextStyle(
+                  color: colors.text,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 4),
-              Text('Personalized content for your interests', style: TextStyle(color: colors.icon, fontSize: 16)),
+              Text(
+                'Personalized content for your interests',
+                style: TextStyle(color: colors.icon, fontSize: 16),
+              ),
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Today's News", style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.w600)),
-                  Icon(Ionicons.ellipsis_horizontal, color: colors.icon, size: 20),
+                  Text(
+                    "Today's News",
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Icon(
+                    Ionicons.ellipsis_horizontal,
+                    color: colors.icon,
+                    size: 20,
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -200,46 +236,105 @@ class ExploreScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
-                                color: _categoryColor(item.category, colors).withOpacity(0.2),
+                                color: _categoryColor(
+                                  item.category,
+                                  colors,
+                                ).withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Row(
                                 children: [
-                                  Icon(_categoryIcon(item.category), size: 16, color: _categoryColor(item.category, colors)),
+                                  Icon(
+                                    _categoryIcon(item.category),
+                                    size: 16,
+                                    color: _categoryColor(
+                                      item.category,
+                                      colors,
+                                    ),
+                                  ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    item.category[0].toUpperCase() + item.category.substring(1),
-                                    style: TextStyle(color: _categoryColor(item.category, colors), fontSize: 12, fontWeight: FontWeight.w600),
+                                    item.category[0].toUpperCase() +
+                                        item.category.substring(1),
+                                    style: TextStyle(
+                                      color: _categoryColor(
+                                        item.category,
+                                        colors,
+                                      ),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                             Icon(
-                              item.isBookmarked ? Ionicons.bookmark : Ionicons.bookmark_outline,
-                              color: item.isBookmarked ? colors.tint : colors.icon,
+                              item.isBookmarked
+                                  ? Ionicons.bookmark
+                                  : Ionicons.bookmark_outline,
+                              color: item.isBookmarked
+                                  ? colors.tint
+                                  : colors.icon,
                               size: 20,
                             ),
                           ],
                         ),
                         const SizedBox(height: 12),
-                        Text(item.title, style: TextStyle(color: colors.text, fontSize: 16, fontWeight: FontWeight.bold, height: 1.4)),
+                        Text(
+                          item.title,
+                          style: TextStyle(
+                            color: colors.text,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            height: 1.4,
+                          ),
+                        ),
                         const SizedBox(height: 8),
-                        Text(item.summary ?? '', style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4)),
+                        Text(
+                          item.summary ?? '',
+                          style: TextStyle(
+                            color: colors.icon,
+                            fontSize: 14,
+                            height: 1.4,
+                          ),
+                        ),
                         const SizedBox(height: 12),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(item.readTime, style: TextStyle(color: colors.icon, fontSize: 12)),
+                            Text(
+                              item.readTime,
+                              style: TextStyle(
+                                color: colors.icon,
+                                fontSize: 12,
+                              ),
+                            ),
                             ElevatedButton(
-                              onPressed: () => context.push('/article/${item.id}'),
+                              onPressed: () =>
+                                  context.push('/article/${item.id}'),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: colors.tint,
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                                foregroundColor: colors.buttonForeground,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 6,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
                               ),
-                              child: const Text('Read More', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
+                              child: const Text(
+                                'Read More',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -251,8 +346,19 @@ class ExploreScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Discover Hobbies', style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.w600)),
-                  Icon(Ionicons.add_circle_outline, color: colors.tint, size: 20),
+                  Text(
+                    'Discover Hobbies',
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Icon(
+                    Ionicons.add_circle_outline,
+                    color: colors.tint,
+                    size: 20,
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
@@ -280,28 +386,58 @@ class ExploreScreen extends StatelessWidget {
                           Container(
                             width: 48,
                             height: 48,
-                            decoration: BoxDecoration(color: colors.tint.withOpacity(0.2), shape: BoxShape.circle),
-                            child: Icon(_hobbyIcon(hobby.category), color: colors.tint),
+                            decoration: BoxDecoration(
+                              color: colors.tint.withOpacity(0.2),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              _hobbyIcon(hobby.category),
+                              color: colors.tint,
+                            ),
                           ),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(hobby.title, style: TextStyle(color: colors.text, fontSize: 16, fontWeight: FontWeight.bold)),
+                                Text(
+                                  hobby.title,
+                                  style: TextStyle(
+                                    color: colors.text,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 const SizedBox(height: 4),
                                 Row(
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                      decoration: BoxDecoration(color: colors.tint.withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 6,
+                                        vertical: 2,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: colors.tint.withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
                                       child: Text(
-                                        hobby.difficulty[0].toUpperCase() + hobby.difficulty.substring(1),
-                                        style: TextStyle(color: colors.tint, fontSize: 10, fontWeight: FontWeight.w600),
+                                        hobby.difficulty[0].toUpperCase() +
+                                            hobby.difficulty.substring(1),
+                                        style: TextStyle(
+                                          color: colors.tint,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600,
+                                        ),
                                       ),
                                     ),
                                     const SizedBox(width: 8),
-                                    Text(hobby.timeRequired, style: TextStyle(color: colors.icon, fontSize: 12)),
+                                    Text(
+                                      hobby.timeRequired,
+                                      style: TextStyle(
+                                        color: colors.icon,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -310,10 +446,24 @@ class ExploreScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      Text(hobby.description, style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4)),
+                      Text(
+                        hobby.description,
+                        style: TextStyle(
+                          color: colors.icon,
+                          fontSize: 14,
+                          height: 1.4,
+                        ),
+                      ),
                       if (hobby.materials.isNotEmpty) ...[
                         const SizedBox(height: 12),
-                        Text('Materials needed:', style: TextStyle(color: colors.text, fontSize: 12, fontWeight: FontWeight.w600)),
+                        Text(
+                          'Materials needed:',
+                          style: TextStyle(
+                            color: colors.text,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         const SizedBox(height: 6),
                         Wrap(
                           spacing: 6,
@@ -321,9 +471,22 @@ class ExploreScreen extends StatelessWidget {
                           children: [
                             for (final material in hobby.materials)
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(color: colors.tint.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
-                                child: Text(material, style: TextStyle(color: colors.tint, fontSize: 11, fontWeight: FontWeight.w500)),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: colors.tint.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Text(
+                                  material,
+                                  style: TextStyle(
+                                    color: colors.tint,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
                           ],
                         ),
@@ -333,10 +496,19 @@ class ExploreScreen extends StatelessWidget {
                         onPressed: () => _showHobbyDialog(context, hobby),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: colors.tint,
+                          foregroundColor: colors.buttonForeground,
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
-                        child: const Text('Get Started', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
+                        child: const Text(
+                          'Get Started',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -361,7 +533,10 @@ class ExploreScreen extends StatelessWidget {
           'This hobby is perfect for ${hobby.category} activities.',
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -372,7 +547,11 @@ class ExploreScreen extends StatelessWidget {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              _showInfo(context, 'Saved!', '${hobby.title} has been added to your favorites.');
+              _showInfo(
+                context,
+                'Saved!',
+                '${hobby.title} has been added to your favorites.',
+              );
             },
             child: const Text('Save to Favorites'),
           ),
@@ -398,7 +577,12 @@ class ExploreScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: Text(title),
         content: Text(message),
-        actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK'))],
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }

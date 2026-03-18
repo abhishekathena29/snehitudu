@@ -66,9 +66,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _passwordController.text.trim(),
       );
       if (success && mounted) {
-        _showMessage('Success', 'Account created successfully! Welcome to Elderly Companion.', onOk: () {
-          context.go('/home');
-        });
+        _showMessage(
+          'Success',
+          'Account created successfully! Welcome to Elderly Companion.',
+          onOk: () {
+            context.go('/home');
+          },
+        );
       }
     } catch (_) {
       _showMessage('Error', 'An error occurred during registration');
@@ -136,7 +140,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(height: 8),
                       Text(
                         'Join Snehitudu to stay connected',
-                        style: TextStyle(color: colors.icon, fontSize: 16, height: 1.5),
+                        style: TextStyle(
+                          color: colors.icon,
+                          fontSize: 16,
+                          height: 1.5,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -168,15 +176,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 colors: colors,
                 suffix: IconButton(
                   icon: Icon(
-                    _showPassword ? Ionicons.eye_off_outline : Ionicons.eye_outline,
+                    _showPassword
+                        ? Ionicons.eye_off_outline
+                        : Ionicons.eye_outline,
                     color: colors.icon,
                   ),
-                  onPressed: () => setState(() => _showPassword = !_showPassword),
+                  onPressed: () =>
+                      setState(() => _showPassword = !_showPassword),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 4, left: 4),
-                child: Text('Must be at least 6 characters', style: TextStyle(color: colors.icon, fontSize: 12)),
+                child: Text(
+                  'Must be at least 6 characters',
+                  style: TextStyle(color: colors.icon, fontSize: 12),
+                ),
               ),
               const SizedBox(height: 20),
               _InputField(
@@ -187,33 +201,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 colors: colors,
                 suffix: IconButton(
                   icon: Icon(
-                    _showConfirmPassword ? Ionicons.eye_off_outline : Ionicons.eye_outline,
+                    _showConfirmPassword
+                        ? Ionicons.eye_off_outline
+                        : Ionicons.eye_outline,
                     color: colors.icon,
                   ),
-                  onPressed: () => setState(() => _showConfirmPassword = !_showConfirmPassword),
+                  onPressed: () => setState(
+                    () => _showConfirmPassword = !_showConfirmPassword,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
-              Wrap(
-                alignment: WrapAlignment.center,
-                children: [
-                  Text('By creating an account, you agree to our ', style: TextStyle(color: colors.icon)),
-                  Text('Terms of Service', style: TextStyle(color: colors.tint, fontWeight: FontWeight.w600)),
-                  Text(' and ', style: TextStyle(color: colors.icon)),
-                  Text('Privacy Policy', style: TextStyle(color: colors.tint, fontWeight: FontWeight.w600)),
-                ],
-              ),
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: _isLoading ? null : _handleRegister,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors.tint,
+                  foregroundColor: colors.buttonForeground,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 child: Text(
                   _isLoading ? 'Creating Account...' : 'Create Account',
-                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -231,10 +246,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Already have an account? ', style: TextStyle(color: colors.icon)),
+                  Text(
+                    'Already have an account? ',
+                    style: TextStyle(color: colors.icon),
+                  ),
                   TextButton(
                     onPressed: () => context.push('/login'),
-                    child: Text('Sign In', style: TextStyle(color: colors.tint, fontWeight: FontWeight.w600)),
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(
+                        color: colors.tint,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -270,7 +294,14 @@ class _InputField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(color: colors.text, fontSize: 16, fontWeight: FontWeight.w600)),
+        Text(
+          label,
+          style: TextStyle(
+            color: colors.text,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
@@ -288,7 +319,10 @@ class _InputField extends StatelessWidget {
               hintText: 'Enter your ${label.toLowerCase()}',
               hintStyle: TextStyle(color: colors.icon),
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 16,
+              ),
             ),
             style: TextStyle(color: colors.text, fontSize: 16),
           ),

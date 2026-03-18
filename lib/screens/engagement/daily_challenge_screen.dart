@@ -59,7 +59,16 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
         completed: false,
         gameData: {
           'category': 'Garden',
-          'correctAnswers': ['flower', 'plant', 'tree', 'grass', 'soil', 'water', 'sun', 'seed'],
+          'correctAnswers': [
+            'flower',
+            'plant',
+            'tree',
+            'grass',
+            'soil',
+            'water',
+            'sun',
+            'seed',
+          ],
           'hint': 'Think about things you find in a garden',
         },
       ),
@@ -197,13 +206,15 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
       Challenge(
         id: '11',
         title: 'Riddle: The Invisible Man',
-        description: 'What has cities, but no houses; forests, but no trees; and rivers, but no water?',
+        description:
+            'What has cities, but no houses; forests, but no trees; and rivers, but no water?',
         type: 'logic',
         difficulty: 'hard',
         points: 20,
         completed: false,
         gameData: {
-          'riddle': 'What has cities, but no houses; forests, but no trees; and rivers, but no water?',
+          'riddle':
+              'What has cities, but no houses; forests, but no trees; and rivers, but no water?',
           'answer': 'map',
           'alternatives': ['globe', 'atlas', 'chart'],
           'hint': 'You use it to find your way',
@@ -227,13 +238,15 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
       Challenge(
         id: '13',
         title: 'Riddle: The Light Switch',
-        description: 'What has keys, no locks; space, no room; and you can enter, but not go in?',
+        description:
+            'What has keys, no locks; space, no room; and you can enter, but not go in?',
         type: 'logic',
         difficulty: 'medium',
         points: 15,
         completed: false,
         gameData: {
-          'riddle': 'What has keys, no locks; space, no room; and you can enter, but not go in?',
+          'riddle':
+              'What has keys, no locks; space, no room; and you can enter, but not go in?',
           'answer': 'keyboard',
           'alternatives': ['computer', 'typewriter', 'piano'],
           'hint': 'You use it to type',
@@ -242,13 +255,15 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
       Challenge(
         id: '14',
         title: 'Riddle: The Colorful Box',
-        description: 'What is black when you buy it, red when you use it, and gray when you throw it away?',
+        description:
+            'What is black when you buy it, red when you use it, and gray when you throw it away?',
         type: 'logic',
         difficulty: 'medium',
         points: 15,
         completed: false,
         gameData: {
-          'riddle': 'What is black when you buy it, red when you use it, and gray when you throw it away?',
+          'riddle':
+              'What is black when you buy it, red when you use it, and gray when you throw it away?',
           'answer': 'charcoal',
           'alternatives': ['coal', 'ash', 'wood'],
           'hint': 'You use it for cooking',
@@ -340,7 +355,9 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
 
   void _handleGameSubmit() {
     if (_currentChallenge == null) return;
-    if (_currentChallenge!.type != 'puzzle' && _answerController.text.trim().isEmpty) return;
+    if (_currentChallenge!.type != 'puzzle' &&
+        _answerController.text.trim().isEmpty)
+      return;
 
     final challenge = _currentChallenge!;
     final userAnswer = _answerController.text.trim().toLowerCase();
@@ -349,7 +366,9 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     switch (challenge.type) {
       case 'word':
         if (challenge.id == '1') {
-          isCorrect = (challenge.gameData['correctAnswers'] as List).contains(userAnswer);
+          isCorrect = (challenge.gameData['correctAnswers'] as List).contains(
+            userAnswer,
+          );
         } else if (challenge.id == '7') {
           isCorrect = userAnswer == challenge.gameData['answer'];
         }
@@ -358,7 +377,8 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
         if (challenge.id == '2') {
           isCorrect = int.tryParse(userAnswer) == challenge.gameData['answer'];
         } else {
-          isCorrect = userAnswer == challenge.gameData['answer'] ||
+          isCorrect =
+              userAnswer == challenge.gameData['answer'] ||
               (challenge.gameData['alternatives'] as List).contains(userAnswer);
         }
         break;
@@ -388,7 +408,10 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
         gamesPlayed: _userProgress.gamesPlayed + 1,
         bestScores: {
           ..._userProgress.bestScores,
-          challenge.id: max(_userProgress.bestScores[challenge.id] ?? 0, newScore),
+          challenge.id: max(
+            _userProgress.bestScores[challenge.id] ?? 0,
+            newScore,
+          ),
         },
       );
 
@@ -422,12 +445,16 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
         _answerController.clear();
       });
 
-      _showDialog('Incorrect Answer', 'Try again! You have ${_maxAttempts - newAttempts} attempts left.');
+      _showDialog(
+        'Incorrect Answer',
+        'Try again! You have ${_maxAttempts - newAttempts} attempts left.',
+      );
     }
   }
 
   void _startMemorySequence() {
-    if (_currentChallenge == null || _currentChallenge!.type != 'memory') return;
+    if (_currentChallenge == null || _currentChallenge!.type != 'memory')
+      return;
     if (_gameData['showSequence'] == true) return;
 
     setState(() => _gameData['showSequence'] = true);
@@ -439,7 +466,8 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
   }
 
   void _handleMemorySequenceTap(int index) {
-    if (_currentChallenge == null || _currentChallenge!.type != 'memory') return;
+    if (_currentChallenge == null || _currentChallenge!.type != 'memory')
+      return;
     if (_gameData['showSequence'] == true) return;
 
     final sequence = _gameData['sequence'] as List;
@@ -470,7 +498,10 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           _attempts = newAttempts;
           _gameData['currentStep'] = 0;
         });
-        _showDialog('Wrong Color!', 'Try again! You have ${_maxAttempts - newAttempts} attempts left.');
+        _showDialog(
+          'Wrong Color!',
+          'Try again! You have ${_maxAttempts - newAttempts} attempts left.',
+        );
       }
     }
   }
@@ -487,7 +518,10 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     if (_currentChallenge == null) return;
 
     if (_isChallengeCompletedToday()) {
-      _showDialog('Challenge Already Completed', 'You have already completed today\'s challenge! Come back tomorrow for a new one.');
+      _showDialog(
+        'Challenge Already Completed',
+        'You have already completed today\'s challenge! Come back tomorrow for a new one.',
+      );
       return;
     }
 
@@ -546,7 +580,10 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
       return Scaffold(
         backgroundColor: colors.background,
         body: Center(
-          child: Text('Loading challenge...', style: TextStyle(color: colors.text, fontSize: 16)),
+          child: Text(
+            'Loading challenge...',
+            style: TextStyle(color: colors.text, fontSize: 16),
+          ),
         ),
       );
     }
@@ -567,7 +604,14 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                     onPressed: () => context.pop(),
                     icon: Icon(Ionicons.arrow_back, color: colors.text),
                   ),
-                  Text('Daily Challenge', style: TextStyle(color: colors.text, fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text(
+                    'Daily Challenge',
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(width: 24),
                 ],
               ),
@@ -587,9 +631,21 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          _StatItem(value: _userProgress.streak.toString(), label: 'Day Streak', colors: colors),
-                          _StatItem(value: _userProgress.totalPoints.toString(), label: 'Total Points', colors: colors),
-                          _StatItem(value: isCompletedToday ? '✓' : 'Today', label: 'Challenge', colors: colors),
+                          _StatItem(
+                            value: _userProgress.streak.toString(),
+                            label: 'Day Streak',
+                            colors: colors,
+                          ),
+                          _StatItem(
+                            value: _userProgress.totalPoints.toString(),
+                            label: 'Total Points',
+                            colors: colors,
+                          ),
+                          _StatItem(
+                            value: isCompletedToday ? '✓' : 'Today',
+                            label: 'Challenge',
+                            colors: colors,
+                          ),
                         ],
                       ),
                     ),
@@ -599,7 +655,14 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                     else
                       _buildChallengeCard(colors, isCompletedToday),
                     const SizedBox(height: 24),
-                    Text('Quick Actions', style: TextStyle(color: colors.text, fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      'Quick Actions',
+                      style: TextStyle(
+                        color: colors.text,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 12),
                     Row(
                       children: [
@@ -609,42 +672,78 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                               onPressed: _handleStartChallenge,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: colors.tint,
-                                padding: const EdgeInsets.symmetric(vertical: 12),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                foregroundColor: colors.buttonForeground,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                               ),
-                              icon: const Icon(Ionicons.play_circle_outline, color: Colors.white, size: 20),
-                              label: const Text('Start Game', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                              icon: const Icon(
+                                Ionicons.play_circle_outline,
+                                size: 20,
+                              ),
+                              label: const Text(
+                                'Start Game',
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ),
-                        if (!isCompletedToday && !_isPlaying) const SizedBox(width: 12),
+                        if (!isCompletedToday && !_isPlaying)
+                          const SizedBox(width: 12),
                         Expanded(
                           child: ElevatedButton.icon(
                             onPressed: () => context.go('/explore'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: colors.tint,
+                              foregroundColor: colors.buttonForeground,
                               padding: const EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
-                            icon: const Icon(Ionicons.trending_up_outline, color: Colors.white, size: 20),
-                            label: const Text('View Progress', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                            icon: const Icon(
+                              Ionicons.trending_up_outline,
+                              size: 20,
+                            ),
+                            label: const Text(
+                              'View Progress',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 24),
-                    Text('This Week', style: TextStyle(color: colors.text, fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      'This Week',
+                      style: TextStyle(
+                        color: colors.text,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        for (int i = 0; i < _userProgress.weeklyProgress.length; i++)
+                        for (
+                          int i = 0;
+                          i < _userProgress.weeklyProgress.length;
+                          i++
+                        )
                           Column(
                             children: [
                               Text(
                                 _dayName(i),
                                 style: TextStyle(
-                                  color: _isToday(i) ? colors.tint : colors.icon,
-                                  fontWeight: _isToday(i) ? FontWeight.bold : FontWeight.normal,
+                                  color: _isToday(i)
+                                      ? colors.tint
+                                      : colors.icon,
+                                  fontWeight: _isToday(i)
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
                                   fontSize: 12,
                                 ),
                               ),
@@ -662,7 +761,11 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                                       : null,
                                 ),
                                 child: _userProgress.weeklyProgress[i]
-                                    ? const Icon(Ionicons.checkmark, size: 12, color: Colors.white)
+                                    ? const Icon(
+                                        Ionicons.checkmark,
+                                        size: 12,
+                                        color: Colors.white,
+                                      )
                                     : null,
                               ),
                             ],
@@ -688,7 +791,9 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
         color: colors.background,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isCompletedToday ? const Color(0xFF4CAF50) : colors.icon.withOpacity(0.4),
+          color: isCompletedToday
+              ? const Color(0xFF4CAF50)
+              : colors.icon.withOpacity(0.4),
           width: isCompletedToday ? 2 : 1,
         ),
         boxShadow: [
@@ -707,7 +812,10 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
               Container(
                 width: 48,
                 height: 48,
-                decoration: BoxDecoration(color: colors.tint.withOpacity(0.2), shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                  color: colors.tint.withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
                 child: Icon(_typeIcon(challenge.type), color: colors.tint),
               ),
               const SizedBox(width: 16),
@@ -715,14 +823,26 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(challenge.title, style: TextStyle(color: colors.text, fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      challenge.title,
+                      style: TextStyle(
+                        color: colors.text,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     const SizedBox(height: 8),
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
-                            color: _difficultyColor(challenge.difficulty).withOpacity(0.2),
+                            color: _difficultyColor(
+                              challenge.difficulty,
+                            ).withOpacity(0.2),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -735,7 +855,13 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        Text('${challenge.points} pts', style: TextStyle(color: colors.tint, fontWeight: FontWeight.w600)),
+                        Text(
+                          '${challenge.points} pts',
+                          style: TextStyle(
+                            color: colors.tint,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -744,7 +870,10 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
             ],
           ),
           const SizedBox(height: 16),
-          Text(challenge.description, style: TextStyle(color: colors.icon, fontSize: 16, height: 1.4)),
+          Text(
+            challenge.description,
+            style: TextStyle(color: colors.icon, fontSize: 16, height: 1.4),
+          ),
           const SizedBox(height: 20),
           if (isCompletedToday)
             Row(
@@ -752,13 +881,26 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    decoration: BoxDecoration(color: const Color(0xFF4CAF50), borderRadius: BorderRadius.circular(12)),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF4CAF50),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Icon(Ionicons.checkmark_circle, color: Colors.white, size: 20),
+                        Icon(
+                          Ionicons.checkmark_circle,
+                          color: Colors.white,
+                          size: 20,
+                        ),
                         SizedBox(width: 8),
-                        Text('Completed Today', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                        Text(
+                          'Completed Today',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -769,11 +911,17 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                     onPressed: () => _initializeGame(challenge),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colors.tint,
+                      foregroundColor: colors.buttonForeground,
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                    icon: const Icon(Ionicons.refresh, color: Colors.white, size: 20),
-                    label: const Text('Play Again', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                    icon: const Icon(Ionicons.refresh, size: 20),
+                    label: const Text(
+                      'Play Again',
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
               ],
@@ -783,11 +931,17 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
               onPressed: _handleStartChallenge,
               style: ElevatedButton.styleFrom(
                 backgroundColor: colors.tint,
+                foregroundColor: colors.buttonForeground,
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              icon: const Icon(Ionicons.play_outline, color: Colors.white, size: 20),
-              label: const Text('Start Challenge', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+              icon: const Icon(Ionicons.play_outline, size: 20),
+              label: const Text(
+                'Start Challenge',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
             ),
         ],
       ),
@@ -817,7 +971,13 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Attempts: $_attempts/$_maxAttempts', style: TextStyle(color: colors.text, fontWeight: FontWeight.w600)),
+              Text(
+                'Attempts: $_attempts/$_maxAttempts',
+                style: TextStyle(
+                  color: colors.text,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               IconButton(
                 onPressed: () {
                   _showConfirmation(
@@ -859,12 +1019,25 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(challenge.title, style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(
+          challenge.title,
+          style: TextStyle(
+            color: colors.text,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(height: 8),
-        Text(challenge.description, style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4)),
+        Text(
+          challenge.description,
+          style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4),
+        ),
         const SizedBox(height: 12),
         if (challenge.id == '1')
-          Text('Hint: ${challenge.gameData['hint']}', style: TextStyle(color: colors.tint, fontSize: 12)),
+          Text(
+            'Hint: ${challenge.gameData['hint']}',
+            style: TextStyle(color: colors.tint, fontSize: 12),
+          ),
         const SizedBox(height: 12),
         _answerField(colors),
         const SizedBox(height: 12),
@@ -872,7 +1045,10 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
         if (_showHint)
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Text(challenge.gameData['hint'], style: TextStyle(color: colors.tint)),
+            child: Text(
+              challenge.gameData['hint'],
+              style: TextStyle(color: colors.tint),
+            ),
           ),
       ],
     );
@@ -882,23 +1058,45 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(challenge.title, style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(
+          challenge.title,
+          style: TextStyle(
+            color: colors.text,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(height: 8),
-        Text(challenge.description, style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4)),
+        Text(
+          challenge.description,
+          style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4),
+        ),
         const SizedBox(height: 12),
         if (challenge.id == '2')
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${(challenge.gameData['sequence'] as List).join(', ')} → ?', style: TextStyle(color: colors.text, fontWeight: FontWeight.w600)),
+              Text(
+                '${(challenge.gameData['sequence'] as List).join(', ')} → ?',
+                style: TextStyle(
+                  color: colors.text,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               const SizedBox(height: 4),
-              Text('Pattern: ${challenge.gameData['pattern']}', style: TextStyle(color: colors.tint, fontSize: 12)),
+              Text(
+                'Pattern: ${challenge.gameData['pattern']}',
+                style: TextStyle(color: colors.tint, fontSize: 12),
+              ),
             ],
           ),
         if (challenge.id == '5')
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
-            child: Text(challenge.gameData['riddle'], style: TextStyle(color: colors.text, fontWeight: FontWeight.w600)),
+            child: Text(
+              challenge.gameData['riddle'],
+              style: TextStyle(color: colors.text, fontWeight: FontWeight.w600),
+            ),
           ),
         _answerField(colors),
         const SizedBox(height: 12),
@@ -906,7 +1104,10 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
         if (_showHint)
           Padding(
             padding: const EdgeInsets.only(top: 10),
-            child: Text(challenge.gameData['hint'], style: TextStyle(color: colors.tint)),
+            child: Text(
+              challenge.gameData['hint'],
+              style: TextStyle(color: colors.tint),
+            ),
           ),
       ],
     );
@@ -921,9 +1122,19 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Memory Sequence', style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(
+          'Memory Sequence',
+          style: TextStyle(
+            color: colors.text,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(height: 8),
-        Text('Watch the sequence and repeat it!', style: TextStyle(color: colors.icon, fontSize: 14)),
+        Text(
+          'Watch the sequence and repeat it!',
+          style: TextStyle(color: colors.icon, fontSize: 14),
+        ),
         const SizedBox(height: 16),
         Wrap(
           spacing: 10,
@@ -931,7 +1142,9 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           children: [
             for (int index = 0; index < colorsList.length; index++)
               GestureDetector(
-                onTap: showSequence ? null : () => _handleMemorySequenceTap(index),
+                onTap: showSequence
+                    ? null
+                    : () => _handleMemorySequenceTap(index),
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.15,
                   height: MediaQuery.of(context).size.width * 0.15,
@@ -942,7 +1155,13 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Text('${index + 1}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: Text(
+                    '${index + 1}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
           ],
@@ -952,12 +1171,15 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           onPressed: _startMemorySequence,
           style: ElevatedButton.styleFrom(
             backgroundColor: colors.tint,
+            foregroundColor: colors.buttonForeground,
             padding: const EdgeInsets.symmetric(vertical: 12),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
           child: Text(
             showSequence ? 'Watching...' : 'Start Sequence',
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
         ),
       ],
@@ -969,9 +1191,19 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Number Puzzle', style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(
+          'Number Puzzle',
+          style: TextStyle(
+            color: colors.text,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(height: 8),
-        Text('Arrange the numbers in ascending order', style: TextStyle(color: colors.icon, fontSize: 14)),
+        Text(
+          'Arrange the numbers in ascending order',
+          style: TextStyle(color: colors.icon, fontSize: 14),
+        ),
         const SizedBox(height: 16),
         Wrap(
           spacing: 10,
@@ -993,7 +1225,11 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                   ),
                   child: Text(
                     currentOrder[index].toString(),
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),
@@ -1004,10 +1240,16 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           onPressed: _handleGameSubmit,
           style: ElevatedButton.styleFrom(
             backgroundColor: colors.tint,
+            foregroundColor: colors.buttonForeground,
             padding: const EdgeInsets.symmetric(vertical: 12),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
-          child: const Text('Check Solution', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+          child: const Text(
+            'Check Solution',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
         ),
       ],
     );
@@ -1026,7 +1268,10 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(color: colors.icon),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 14,
+        ),
       ),
       style: TextStyle(color: colors.text, fontSize: 16),
     );
@@ -1040,10 +1285,16 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
             onPressed: _handleGameSubmit,
             style: ElevatedButton.styleFrom(
               backgroundColor: colors.tint,
+              foregroundColor: colors.buttonForeground,
               padding: const EdgeInsets.symmetric(vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
-            child: const Text('Submit Answer', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+            child: const Text(
+              'Submit Answer',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
           ),
         ),
         const SizedBox(width: 12),
@@ -1053,9 +1304,17 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: colors.icon,
               padding: const EdgeInsets.symmetric(vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
-            child: const Text('Show Hint', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+            child: const Text(
+              'Show Hint',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
         ),
       ],
@@ -1085,19 +1344,31 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
       builder: (context) => AlertDialog(
         title: Text(title),
         content: Text(message),
-        actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK'))],
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }
 
-  void _showConfirmation(String title, String message, {required VoidCallback onConfirm}) {
+  void _showConfirmation(
+    String title,
+    String message, {
+    required VoidCallback onConfirm,
+  }) {
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(title),
         content: Text(message),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -1112,7 +1383,11 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
 }
 
 class _StatItem extends StatelessWidget {
-  const _StatItem({required this.value, required this.label, required this.colors});
+  const _StatItem({
+    required this.value,
+    required this.label,
+    required this.colors,
+  });
 
   final String value;
   final String label;
@@ -1122,7 +1397,14 @@ class _StatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(value, style: TextStyle(color: colors.text, fontSize: 24, fontWeight: FontWeight.bold)),
+        Text(
+          value,
+          style: TextStyle(
+            color: colors.text,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         const SizedBox(height: 4),
         Text(label, style: TextStyle(color: colors.icon, fontSize: 12)),
       ],

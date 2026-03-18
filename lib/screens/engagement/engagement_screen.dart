@@ -64,9 +64,19 @@ class EngagementScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 24),
-              Text('Engagement', style: TextStyle(color: colors.text, fontSize: 28, fontWeight: FontWeight.bold)),
+              Text(
+                'Engagement',
+                style: TextStyle(
+                  color: colors.text,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 8),
-              Text('Keep your mind active and engaged', style: TextStyle(color: colors.icon, fontSize: 16)),
+              Text(
+                'Keep your mind active and engaged',
+                style: TextStyle(color: colors.icon, fontSize: 16),
+              ),
               const SizedBox(height: 24),
               Container(
                 padding: const EdgeInsets.all(20),
@@ -82,26 +92,56 @@ class EngagementScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Daily Challenge Available!', style: TextStyle(color: colors.text, fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text(
+                            'Daily Challenge Available!',
+                            style: TextStyle(
+                              color: colors.text,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           const SizedBox(height: 4),
-                          Text('Complete today\'s challenge to maintain your streak', style: TextStyle(color: colors.icon, fontSize: 14)),
+                          Text(
+                            'Complete today\'s challenge to maintain your streak',
+                            style: TextStyle(color: colors.icon, fontSize: 14),
+                          ),
                         ],
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () => context.push('/engagement/daily-challenge'),
+                      onPressed: () =>
+                          context.push('/engagement/daily-challenge'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.tint,
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        foregroundColor: colors.buttonForeground,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                       ),
-                      child: const Text('Start Now', style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
+                      child: const Text(
+                        'Start Now',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(height: 30),
-              Text('Brain Training Activities', style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold)),
+              Text(
+                'Brain Training Activities',
+                style: TextStyle(
+                  color: colors.text,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 16),
               Wrap(
                 spacing: 12,
@@ -117,7 +157,9 @@ class EngagementScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: colors.background,
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: colors.icon.withOpacity(0.4)),
+                            border: Border.all(
+                              color: colors.icon.withOpacity(0.4),
+                            ),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.08),
@@ -134,13 +176,34 @@ class EngagementScreen extends StatelessWidget {
                                   Container(
                                     width: 40,
                                     height: 40,
-                                    decoration: BoxDecoration(color: feature.color.withOpacity(0.2), shape: BoxShape.circle),
-                                    child: Icon(feature.icon, color: feature.color, size: 24),
+                                    decoration: BoxDecoration(
+                                      color: feature.color.withOpacity(0.2),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Icon(
+                                      feature.icon,
+                                      color: feature.color,
+                                      size: 24,
+                                    ),
                                   ),
                                   const SizedBox(height: 12),
-                                  Text(feature.title, style: TextStyle(color: colors.text, fontSize: 14, fontWeight: FontWeight.bold)),
+                                  Text(
+                                    feature.title,
+                                    style: TextStyle(
+                                      color: colors.text,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   const SizedBox(height: 4),
-                                  Text(feature.description, style: TextStyle(color: colors.icon, fontSize: 12, height: 1.3)),
+                                  Text(
+                                    feature.description,
+                                    style: TextStyle(
+                                      color: colors.icon,
+                                      fontSize: 12,
+                                      height: 1.3,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
@@ -151,17 +214,26 @@ class EngagementScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-              Text('Brain Health Tips', style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold)),
+              Text(
+                'Brain Health Tips',
+                style: TextStyle(
+                  color: colors.text,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 16),
               _TipCard(
                 icon: Ionicons.bulb_outline,
-                text: 'Regular brain training can help maintain cognitive function and improve memory as you age.',
+                text:
+                    'Regular brain training can help maintain cognitive function and improve memory as you age.',
                 colors: colors,
               ),
               const SizedBox(height: 12),
               _TipCard(
                 icon: Ionicons.time_outline,
-                text: 'Try to complete at least one activity daily to build a consistent routine.',
+                text:
+                    'Try to complete at least one activity daily to build a consistent routine.',
                 colors: colors,
               ),
               const SizedBox(height: 30),
@@ -192,7 +264,11 @@ class _EngagementFeature {
 }
 
 class _TipCard extends StatelessWidget {
-  const _TipCard({required this.icon, required this.text, required this.colors});
+  const _TipCard({
+    required this.icon,
+    required this.text,
+    required this.colors,
+  });
 
   final IconData icon;
   final String text;
@@ -220,7 +296,10 @@ class _TipCard extends StatelessWidget {
           Icon(icon, color: colors.tint, size: 20),
           const SizedBox(width: 12),
           Expanded(
-            child: Text(text, style: TextStyle(color: colors.text, fontSize: 14, height: 1.4)),
+            child: Text(
+              text,
+              style: TextStyle(color: colors.text, fontSize: 14, height: 1.4),
+            ),
           ),
         ],
       ),

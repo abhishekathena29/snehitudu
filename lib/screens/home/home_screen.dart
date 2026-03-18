@@ -99,42 +99,45 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ];
 
-    final gameCards = <({
-      String title,
-      String description,
-      String route,
-      IconData icon,
-      Color color,
-    })>[
-      (
-        title: 'Memory Match',
-        description: 'Remember four gentle prompts',
-        route: '/engagement/memory-games',
-        icon: Ionicons.sparkles_outline,
-        color: const Color(0xFF4ECDC4),
-      ),
-      (
-        title: 'Number Trail',
-        description: 'Fill in the next number',
-        route: '/engagement/puzzle-games',
-        icon: Ionicons.grid_outline,
-        color: const Color(0xFF45B7D1),
-      ),
-      (
-        title: 'Word Builder',
-        description: 'Unscramble a familiar word',
-        route: '/engagement/word-games',
-        icon: Ionicons.text_outline,
-        color: const Color(0xFF96CEB4),
-      ),
-      (
-        title: 'Logic Pick',
-        description: 'Choose the best answer',
-        route: '/engagement/logic-games',
-        icon: Ionicons.calculator_outline,
-        color: const Color(0xFFFFC857),
-      ),
-    ];
+    final gameCards =
+        <
+          ({
+            String title,
+            String description,
+            String route,
+            IconData icon,
+            Color color,
+          })
+        >[
+          (
+            title: 'Memory Match',
+            description: 'Remember four gentle prompts',
+            route: '/engagement/memory-games',
+            icon: Ionicons.sparkles_outline,
+            color: const Color(0xFF4ECDC4),
+          ),
+          (
+            title: 'Number Trail',
+            description: 'Fill in the next number',
+            route: '/engagement/puzzle-games',
+            icon: Ionicons.grid_outline,
+            color: const Color(0xFF45B7D1),
+          ),
+          (
+            title: 'Word Builder',
+            description: 'Unscramble a familiar word',
+            route: '/engagement/word-games',
+            icon: Ionicons.text_outline,
+            color: const Color(0xFF96CEB4),
+          ),
+          (
+            title: 'Logic Pick',
+            description: 'Choose the best answer',
+            route: '/engagement/logic-games',
+            icon: Ionicons.calculator_outline,
+            color: const Color(0xFFFFC857),
+          ),
+        ];
 
     final greeting = () {
       final hour = DateTime.now().hour;
@@ -160,12 +163,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         'Good $greeting!',
-                        style: TextStyle(color: colors.text.withOpacity(0.8), fontSize: 16),
+                        style: TextStyle(
+                          color: colors.text.withOpacity(0.8),
+                          fontSize: 16,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         user?.name ?? 'User',
-                        style: TextStyle(color: colors.text, fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          color: colors.text,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -202,12 +212,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text(
                             'Ready for a calm, active day?',
-                            style: TextStyle(color: colors.text, fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              color: colors.text,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             'Start with a daily challenge or pick a short game.',
-                            style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4),
+                            style: TextStyle(
+                              color: colors.icon,
+                              fontSize: 14,
+                              height: 1.4,
+                            ),
                           ),
                         ],
                       ),
@@ -218,7 +236,11 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 24),
               Text(
                 "Today's Overview",
-                style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: colors.text,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
               Wrap(
@@ -258,7 +280,11 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 30),
               Text(
                 'Quick Actions',
-                style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: colors.text,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
               Row(
@@ -270,11 +296,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.tint,
+                        foregroundColor: colors.buttonForeground,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
-                      icon: const Icon(Ionicons.bulb_outline, color: Colors.white),
-                      label: const Text('Start Challenge', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                      icon: const Icon(Ionicons.bulb_outline),
+                      label: const Text(
+                        'Start Challenge',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -283,11 +315,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () => context.go('/explore'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: colors.tint,
+                        foregroundColor: colors.buttonForeground,
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
-                      icon: const Icon(Ionicons.newspaper_outline, color: Colors.white),
-                      label: const Text('Read News', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+                      icon: const Icon(Ionicons.newspaper_outline),
+                      label: const Text(
+                        'Read News',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ),
                 ],
@@ -298,11 +336,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     'Mini Games',
-                    style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   TextButton(
                     onPressed: () => context.go('/engagement'),
-                    child: Text('Open All', style: TextStyle(color: colors.tint, fontWeight: FontWeight.w600)),
+                    child: Text(
+                      'Open All',
+                      style: TextStyle(
+                        color: colors.tint,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -321,7 +369,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: BoxDecoration(
                           color: colors.background,
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: game.color.withOpacity(0.35)),
+                          border: Border.all(
+                            color: game.color.withOpacity(0.35),
+                          ),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.black.withOpacity(0.06),
@@ -345,12 +395,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(height: 12),
                             Text(
                               game.title,
-                              style: TextStyle(color: colors.text, fontSize: 14, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                color: colors.text,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const SizedBox(height: 6),
                             Text(
                               game.description,
-                              style: TextStyle(color: colors.icon, fontSize: 12, height: 1.4),
+                              style: TextStyle(
+                                color: colors.icon,
+                                fontSize: 12,
+                                height: 1.4,
+                              ),
                             ),
                           ],
                         ),
@@ -364,11 +422,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     'Recent News',
-                    style: TextStyle(color: colors.text, fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   TextButton(
                     onPressed: () => context.go('/explore'),
-                    child: Text('View All', style: TextStyle(color: colors.tint, fontWeight: FontWeight.w600)),
+                    child: Text(
+                      'View All',
+                      style: TextStyle(
+                        color: colors.tint,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -398,19 +466,35 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
                               decoration: BoxDecoration(
-                                color: _categoryColor(item.category, colors).withOpacity(0.2),
+                                color: _categoryColor(
+                                  item.category,
+                                  colors,
+                                ).withOpacity(0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Row(
                                 children: [
-                                  Icon(_categoryIcon(item.category), size: 16, color: _categoryColor(item.category, colors)),
+                                  Icon(
+                                    _categoryIcon(item.category),
+                                    size: 16,
+                                    color: _categoryColor(
+                                      item.category,
+                                      colors,
+                                    ),
+                                  ),
                                   const SizedBox(width: 4),
                                   Text(
                                     item.category,
                                     style: TextStyle(
-                                      color: _categoryColor(item.category, colors),
+                                      color: _categoryColor(
+                                        item.category,
+                                        colors,
+                                      ),
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -418,13 +502,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             ),
-                            Text(item.readTime, style: TextStyle(color: colors.icon, fontSize: 12)),
+                            Text(
+                              item.readTime,
+                              style: TextStyle(
+                                color: colors.icon,
+                                fontSize: 12,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 8),
                         Text(
                           item.title,
-                          style: TextStyle(color: colors.text, fontSize: 14, fontWeight: FontWeight.w600, height: 1.4),
+                          style: TextStyle(
+                            color: colors.text,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            height: 1.4,
+                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -503,11 +598,21 @@ class _StatCard extends StatelessWidget {
           Container(
             width: 48,
             height: 48,
-            decoration: BoxDecoration(color: iconColor.withOpacity(0.2), shape: BoxShape.circle),
+            decoration: BoxDecoration(
+              color: iconColor.withOpacity(0.2),
+              shape: BoxShape.circle,
+            ),
             child: Icon(icon, color: iconColor),
           ),
           const SizedBox(height: 8),
-          Text(value, style: TextStyle(color: colors.text, fontSize: 24, fontWeight: FontWeight.bold)),
+          Text(
+            value,
+            style: TextStyle(
+              color: colors.text,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           const SizedBox(height: 4),
           Text(label, style: TextStyle(color: colors.icon, fontSize: 12)),
         ],

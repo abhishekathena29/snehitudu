@@ -46,7 +46,6 @@ class AppUser {
     required this.email,
     this.age,
     this.emergencyContact,
-    this.medicalInfo,
     required this.preferences,
   });
 
@@ -55,7 +54,6 @@ class AppUser {
   final String email;
   final int? age;
   final String? emergencyContact;
-  final String? medicalInfo;
   final UserPreferences preferences;
 
   factory AppUser.fromMap(String id, Map<String, dynamic> map) {
@@ -65,7 +63,6 @@ class AppUser {
       email: map['email'] ?? '',
       age: map['age'],
       emergencyContact: map['emergencyContact'],
-      medicalInfo: map['medicalInfo'],
       preferences: UserPreferences.fromMap(map['preferences']),
     );
   }
@@ -77,7 +74,6 @@ class AppUser {
       'email': email,
       'age': age,
       'emergencyContact': emergencyContact,
-      'medicalInfo': medicalInfo,
       'preferences': preferences.toMap(),
     };
   }
@@ -87,7 +83,6 @@ class AppUser {
     String? email,
     int? age,
     String? emergencyContact,
-    String? medicalInfo,
     UserPreferences? preferences,
   }) {
     return AppUser(
@@ -96,7 +91,6 @@ class AppUser {
       email: email ?? this.email,
       age: age ?? this.age,
       emergencyContact: emergencyContact ?? this.emergencyContact,
-      medicalInfo: medicalInfo ?? this.medicalInfo,
       preferences: preferences ?? this.preferences,
     );
   }

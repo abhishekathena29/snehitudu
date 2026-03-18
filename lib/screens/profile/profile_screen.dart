@@ -40,14 +40,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Text('Edit ${_titleCase(field)}'),
           content: TextField(
             controller: controller,
-            keyboardType: field == 'age' ? TextInputType.number : TextInputType.text,
+            keyboardType: field == 'age'
+                ? TextInputType.number
+                : TextInputType.text,
             decoration: InputDecoration(
               hintText: 'Enter $field',
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
             TextButton(
               onPressed: () async {
                 final value = controller.text.trim();
@@ -62,8 +69,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   updated = user.copyWith(age: int.tryParse(value) ?? user.age);
                 } else if (field == 'emergencyContact') {
                   updated = user.copyWith(emergencyContact: value);
-                } else if (field == 'medicalInfo') {
-                  updated = user.copyWith(medicalInfo: value);
                 } else {
                   updated = user;
                 }
@@ -84,7 +89,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (context) => AlertDialog(
         title: Text(title),
         content: Text(message),
-        actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK'))],
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }
@@ -101,7 +111,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (user == null) {
       return Scaffold(
         backgroundColor: colors.background,
-        body: Center(child: Text('No user data', style: TextStyle(color: colors.text))),
+        body: Center(
+          child: Text('No user data', style: TextStyle(color: colors.text)),
+        ),
       );
     }
 
@@ -115,7 +127,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Profile', style: TextStyle(color: colors.text, fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text(
+                    'Profile',
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   IconButton(
                     onPressed: () => _editField('name', user.name),
                     icon: Icon(Ionicons.create_outline, color: colors.tint),
@@ -134,8 +153,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Container(
                           width: 100,
                           height: 100,
-                          decoration: BoxDecoration(color: colors.tint.withOpacity(0.2), shape: BoxShape.circle),
-                          child: Icon(Ionicons.person, color: colors.tint, size: 48),
+                          decoration: BoxDecoration(
+                            color: colors.tint.withOpacity(0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Ionicons.person,
+                            color: colors.tint,
+                            size: 48,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         Row(
@@ -144,21 +170,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Flexible(
                               child: Text(
                                 user.name,
-                                style: TextStyle(color: colors.text, fontSize: 24, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  color: colors.text,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             IconButton(
                               onPressed: () => _editField('name', user.name),
-                              icon: Icon(Ionicons.create_outline, color: colors.tint, size: 18),
+                              icon: Icon(
+                                Ionicons.create_outline,
+                                color: colors.tint,
+                                size: 18,
+                              ),
                               tooltip: 'Edit username',
                             ),
                           ],
                         ),
                         const SizedBox(height: 4),
-                        Text(user.email, style: TextStyle(color: colors.icon, fontSize: 16)),
+                        Text(
+                          user.email,
+                          style: TextStyle(color: colors.icon, fontSize: 16),
+                        ),
                         if ((user.age ?? 0) > 0)
-                          Text('${user.age} years old', style: TextStyle(color: colors.icon, fontSize: 14)),
+                          Text(
+                            '${user.age} years old',
+                            style: TextStyle(color: colors.icon, fontSize: 14),
+                          ),
                       ],
                     ),
                     const SizedBox(height: 30),
@@ -179,7 +219,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Personal Information', style: TextStyle(color: colors.text, fontSize: 18, fontWeight: FontWeight.bold)),
+                          Text(
+                            'Personal Information',
+                            style: TextStyle(
+                              color: colors.text,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           const SizedBox(height: 16),
                           _InfoRow(
                             icon: Ionicons.person_outline,
@@ -193,21 +240,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             label: 'Emergency Contact',
                             value: user.emergencyContact ?? 'Tap to add',
                             colors: colors,
-                            onTap: () => _editField('emergencyContact', user.emergencyContact ?? ''),
-                          ),
-                          _InfoRow(
-                            icon: Ionicons.medical_outline,
-                            label: 'Medical Information',
-                            value: user.medicalInfo ?? 'Tap to add',
-                            colors: colors,
-                            onTap: () => _editField('medicalInfo', user.medicalInfo ?? ''),
+                            onTap: () => _editField(
+                              'emergencyContact',
+                              user.emergencyContact ?? '',
+                            ),
                           ),
                           _InfoRow(
                             icon: Ionicons.calendar_outline,
                             label: 'Age',
-                            value: (user.age ?? 0) == 0 ? 'Tap to add' : user.age.toString(),
+                            value: (user.age ?? 0) == 0
+                                ? 'Tap to add'
+                                : user.age.toString(),
                             colors: colors,
-                            onTap: () => _editField('age', user.age?.toString() ?? ''),
+                            onTap: () =>
+                                _editField('age', user.age?.toString() ?? ''),
                           ),
                         ],
                       ),
@@ -224,12 +270,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         router.go('/login');
                       },
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                          horizontal: 16,
+                        ),
                         side: const BorderSide(color: Color(0xFFFF3B30)),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                       ),
-                      icon: const Icon(Ionicons.log_out_outline, color: Color(0xFFFF3B30), size: 20),
-                      label: const Text('Logout', style: TextStyle(color: Color(0xFFFF3B30), fontWeight: FontWeight.w600)),
+                      icon: const Icon(
+                        Ionicons.log_out_outline,
+                        color: Color(0xFFFF3B30),
+                        size: 20,
+                      ),
+                      label: const Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: Color(0xFFFF3B30),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 30),
                   ],
@@ -249,8 +310,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: const Text('Logout'),
         content: const Text('Are you sure you want to logout?'),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(false), child: const Text('Cancel')),
-          TextButton(onPressed: () => Navigator.of(context).pop(true), child: const Text('Logout')),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Logout'),
+          ),
         ],
       ),
     );
@@ -287,9 +354,19 @@ class _InfoRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(label, style: TextStyle(color: colors.icon, fontSize: 12)),
+                  Text(
+                    label,
+                    style: TextStyle(color: colors.icon, fontSize: 12),
+                  ),
                   const SizedBox(height: 4),
-                  Text(value, style: TextStyle(color: colors.text, fontSize: 16, fontWeight: FontWeight.w500)),
+                  Text(
+                    value,
+                    style: TextStyle(
+                      color: colors.text,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ],
               ),
             ),

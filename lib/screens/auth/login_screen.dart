@@ -103,7 +103,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 8),
                   Text(
                     'Sign in to your Snehitudu account',
-                    style: TextStyle(color: colors.icon, fontSize: 16, height: 1.5),
+                    style: TextStyle(
+                      color: colors.icon,
+                      fontSize: 16,
+                      height: 1.5,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -125,31 +129,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 colors: colors,
                 suffix: IconButton(
                   icon: Icon(
-                    _showPassword ? Ionicons.eye_off_outline : Ionicons.eye_outline,
+                    _showPassword
+                        ? Ionicons.eye_off_outline
+                        : Ionicons.eye_outline,
                     color: colors.icon,
                   ),
-                  onPressed: () => setState(() => _showPassword = !_showPassword),
+                  onPressed: () =>
+                      setState(() => _showPassword = !_showPassword),
                 ),
               ),
-              const SizedBox(height: 12),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text('Forgot Password?', style: TextStyle(color: colors.tint)),
-                ),
-              ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _isLoading ? null : _handleLogin,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colors.tint,
+                  foregroundColor: colors.buttonForeground,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 child: Text(
                   _isLoading ? 'Signing In...' : 'Sign In',
-                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               const SizedBox(height: 24),
@@ -167,10 +172,19 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Don\'t have an account? ', style: TextStyle(color: colors.icon)),
+                  Text(
+                    'Don\'t have an account? ',
+                    style: TextStyle(color: colors.icon),
+                  ),
                   TextButton(
                     onPressed: () => context.push('/register'),
-                    child: Text('Sign Up', style: TextStyle(color: colors.tint, fontWeight: FontWeight.w600)),
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(
+                        color: colors.tint,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -206,7 +220,14 @@ class _InputField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(color: colors.text, fontSize: 16, fontWeight: FontWeight.w600)),
+        Text(
+          label,
+          style: TextStyle(
+            color: colors.text,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
@@ -224,7 +245,10 @@ class _InputField extends StatelessWidget {
               hintText: 'Enter your ${label.toLowerCase()}',
               hintStyle: TextStyle(color: colors.icon),
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 16,
+              ),
             ),
             style: TextStyle(color: colors.text, fontSize: 16),
           ),
