@@ -1,41 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/app_user.dart';
-import '../../services/auth_service.dart';
+import '../../services/profile_service.dart';
 import '../../theme/app_theme.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  AppUser? _localUser;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final user = context.read<AuthService>().user;
-    if (user != null && _localUser == null) {
-      _localUser = user;
-    }
-  }
-
-  Future<void> _updateUser(AppUser updated) async {
-    setState(() => _localUser = updated);
-    await context.read<AuthService>().updateUserProfile(updated);
-  }
-
-  void _editField(String field, String currentValue) {
+  void _editField(BuildContext context, String field, String currentValue) {
     final controller = TextEditingController(text: currentValue);
+    final service = context.read<ProfileService>();
     showDialog<void>(
       context: context,
-      builder: (context) {
+      builder: (dialogContext) {
         return AlertDialog(
           title: Text('Edit ${_titleCase(field)}'),
           content: TextField(
@@ -43,6 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             keyboardType: field == 'age'
                 ? TextInputType.number
                 : TextInputType.text,
+            style: const TextStyle(fontSize: 18),
             decoration: InputDecoration(
               hintText: 'Enter $field',
               border: OutlineInputBorder(
@@ -52,16 +32,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.of(dialogContext).pop(),
               child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () async {
                 final value = controller.text.trim();
                 if (value.isEmpty) return;
-                Navigator.of(context).pop();
-                final user = _localUser;
-                if (user == null) return;
+                Navigator.of(dialogContext).pop();
+                final user = service.profile;
                 AppUser updated;
                 if (field == 'name') {
                   updated = user.copyWith(name: value);
@@ -72,30 +51,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 } else {
                   updated = user;
                 }
-                await _updateUser(updated);
-                _showMessage('Success', 'Profile updated successfully!');
+                await service.update(updated);
               },
               child: const Text('Save'),
             ),
           ],
         );
       },
-    );
-  }
-
-  void _showMessage(String title, String message) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
     );
   }
 
@@ -107,15 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = AppThemeColors.of(context);
-    final user = _localUser ?? context.watch<AuthService>().user;
-    if (user == null) {
-      return Scaffold(
-        backgroundColor: colors.background,
-        body: Center(
-          child: Text('No user data', style: TextStyle(color: colors.text)),
-        ),
-      );
-    }
+    final user = context.watch<ProfileService>().profile;
 
     return Scaffold(
       backgroundColor: colors.background,
@@ -131,13 +85,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     'Profile',
                     style: TextStyle(
                       color: colors.text,
-                      fontSize: 24,
+                      fontSize: 26,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   IconButton(
-                    onPressed: () => _editField('name', user.name),
+                    onPressed: () => _editField(context, 'name', user.name),
                     icon: Icon(Ionicons.create_outline, color: colors.tint),
+                    iconSize: 28,
                   ),
                 ],
               ),
@@ -151,8 +106,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Column(
                       children: [
                         Container(
-                          width: 100,
-                          height: 100,
+                          width: 110,
+                          height: 110,
                           decoration: BoxDecoration(
                             color: colors.tint.withOpacity(0.2),
                             shape: BoxShape.circle,
@@ -160,7 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Icon(
                             Ionicons.person,
                             color: colors.tint,
-                            size: 48,
+                            size: 56,
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -172,32 +127,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 user.name,
                                 style: TextStyle(
                                   color: colors.text,
-                                  fontSize: 24,
+                                  fontSize: 26,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             IconButton(
-                              onPressed: () => _editField('name', user.name),
+                              onPressed: () =>
+                                  _editField(context, 'name', user.name),
                               icon: Icon(
                                 Ionicons.create_outline,
                                 color: colors.tint,
-                                size: 18,
+                                size: 22,
                               ),
-                              tooltip: 'Edit username',
+                              tooltip: 'Edit name',
                             ),
                           ],
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          user.email,
-                          style: TextStyle(color: colors.icon, fontSize: 16),
-                        ),
                         if ((user.age ?? 0) > 0)
-                          Text(
-                            '${user.age} years old',
-                            style: TextStyle(color: colors.icon, fontSize: 14),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Text(
+                              '${user.age} years old',
+                              style:
+                                  TextStyle(color: colors.icon, fontSize: 16),
+                            ),
                           ),
                       ],
                     ),
@@ -223,24 +178,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             'Personal Information',
                             style: TextStyle(
                               color: colors.text,
-                              fontSize: 18,
+                              fontSize: 22,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 16),
                           _InfoRow(
                             icon: Ionicons.person_outline,
-                            label: 'Username',
+                            label: 'Name',
                             value: user.name,
                             colors: colors,
-                            onTap: () => _editField('name', user.name),
+                            onTap: () =>
+                                _editField(context, 'name', user.name),
                           ),
                           _InfoRow(
                             icon: Ionicons.call_outline,
                             label: 'Emergency Contact',
-                            value: user.emergencyContact ?? 'Tap to add',
+                            value: user.emergencyContact?.isNotEmpty == true
+                                ? user.emergencyContact!
+                                : 'Tap to add',
                             colors: colors,
                             onTap: () => _editField(
+                              context,
                               'emergencyContact',
                               user.emergencyContact ?? '',
                             ),
@@ -252,44 +211,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ? 'Tap to add'
                                 : user.age.toString(),
                             colors: colors,
-                            onTap: () =>
-                                _editField('age', user.age?.toString() ?? ''),
+                            onTap: () => _editField(
+                                context, 'age', user.age?.toString() ?? ''),
                           ),
                         ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    OutlinedButton.icon(
-                      onPressed: () async {
-                        final authService = context.read<AuthService>();
-                        final router = GoRouter.of(context);
-                        final confirmed = await _confirmLogout();
-                        if (!confirmed || !mounted) return;
-                        await authService.logout();
-                        if (!mounted) return;
-                        router.go('/login');
-                      },
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16,
-                          horizontal: 16,
-                        ),
-                        side: const BorderSide(color: Color(0xFFFF3B30)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      icon: const Icon(
-                        Ionicons.log_out_outline,
-                        color: Color(0xFFFF3B30),
-                        size: 20,
-                      ),
-                      label: const Text(
-                        'Logout',
-                        style: TextStyle(
-                          color: Color(0xFFFF3B30),
-                          fontWeight: FontWeight.w600,
-                        ),
                       ),
                     ),
                     const SizedBox(height: 30),
@@ -301,27 +226,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
-  }
-
-  Future<bool> _confirmLogout() async {
-    final result = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Logout'),
-          ),
-        ],
-      ),
-    );
-    return result ?? false;
   }
 }
 
@@ -345,32 +249,32 @@ class _InfoRow extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 16),
+        padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
           children: [
-            Icon(icon, color: colors.icon, size: 20),
-            const SizedBox(width: 12),
+            Icon(icon, color: colors.icon, size: 24),
+            const SizedBox(width: 14),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     label,
-                    style: TextStyle(color: colors.icon, fontSize: 12),
+                    style: TextStyle(color: colors.icon, fontSize: 14),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     value,
                     style: TextStyle(
                       color: colors.text,
-                      fontSize: 16,
+                      fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
             ),
-            Icon(Ionicons.chevron_forward, color: colors.icon, size: 16),
+            Icon(Ionicons.chevron_forward, color: colors.icon, size: 20),
           ],
         ),
       ),

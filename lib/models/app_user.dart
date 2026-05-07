@@ -41,26 +41,31 @@ class UserPreferences {
 
 class AppUser {
   const AppUser({
-    required this.id,
     required this.name,
-    required this.email,
     this.age,
     this.emergencyContact,
     required this.preferences,
   });
 
-  final String id;
   final String name;
-  final String email;
   final int? age;
   final String? emergencyContact;
   final UserPreferences preferences;
 
-  factory AppUser.fromMap(String id, Map<String, dynamic> map) {
+  factory AppUser.initial() {
+    return const AppUser(
+      name: 'Friend',
+      preferences: UserPreferences(
+        notifications: true,
+        accessibility: true,
+        theme: 'auto',
+      ),
+    );
+  }
+
+  factory AppUser.fromMap(Map<String, dynamic> map) {
     return AppUser(
-      id: id,
-      name: map['name'] ?? 'User',
-      email: map['email'] ?? '',
+      name: map['name'] ?? 'Friend',
       age: map['age'],
       emergencyContact: map['emergencyContact'],
       preferences: UserPreferences.fromMap(map['preferences']),
@@ -69,9 +74,7 @@ class AppUser {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'name': name,
-      'email': email,
       'age': age,
       'emergencyContact': emergencyContact,
       'preferences': preferences.toMap(),
@@ -80,15 +83,12 @@ class AppUser {
 
   AppUser copyWith({
     String? name,
-    String? email,
     int? age,
     String? emergencyContact,
     UserPreferences? preferences,
   }) {
     return AppUser(
-      id: id,
       name: name ?? this.name,
-      email: email ?? this.email,
       age: age ?? this.age,
       emergencyContact: emergencyContact ?? this.emergencyContact,
       preferences: preferences ?? this.preferences,

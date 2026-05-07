@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Snehitudu uses your photos so you can add family pictures to your memories and photo puzzles.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Snehitudu can take a photo to add to your memories and photo puzzles.</string>
 </dict>
 </plist>

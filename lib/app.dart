@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'routing/app_router.dart';
-import 'services/auth_service.dart';
+import 'services/memory_photo_service.dart';
+import 'services/profile_service.dart';
 import 'theme/app_theme.dart';
 
 class ElderlyCompanionApp extends StatefulWidget {
@@ -13,26 +14,32 @@ class ElderlyCompanionApp extends StatefulWidget {
 }
 
 class _ElderlyCompanionAppState extends State<ElderlyCompanionApp> {
-  late final AuthService _authService;
+  late final ProfileService _profileService;
+  late final MemoryPhotoService _photoService;
   late final AppRouter _appRouter;
 
   @override
   void initState() {
     super.initState();
-    _authService = AuthService();
-    _appRouter = AppRouter(_authService);
+    _profileService = ProfileService();
+    _photoService = MemoryPhotoService();
+    _appRouter = AppRouter();
   }
 
   @override
   void dispose() {
-    _authService.dispose();
+    _profileService.dispose();
+    _photoService.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AuthService>.value(
-      value: _authService,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ProfileService>.value(value: _profileService),
+        ChangeNotifierProvider<MemoryPhotoService>.value(value: _photoService),
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Snehitudu',

@@ -53,6 +53,14 @@ class EngagementScreen extends StatelessWidget {
         color: const Color(0xFFFFEAA7),
         route: '/engagement/logic-games',
       ),
+      _EngagementFeature(
+        id: 'photo-puzzle',
+        title: 'Family Photo Puzzle',
+        description: 'Rebuild a family picture, tile by tile',
+        icon: Ionicons.images_outline,
+        color: const Color(0xFFE76F51),
+        route: '/engagement/photo-puzzle',
+      ),
     ];
 
     return Scaffold(
@@ -84,51 +92,61 @@ class EngagementScreen extends StatelessWidget {
                   color: colors.tint.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const AppLogo(size: 48),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Daily Challenge Available!',
-                            style: TextStyle(
-                              color: colors.text,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Complete today\'s challenge to maintain your streak',
-                            style: TextStyle(color: colors.icon, fontSize: 14),
-                          ),
-                        ],
+                    Text(
+                      'Daily Challenge Available!',
+                      style: TextStyle(
+                        color: colors.text,
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () =>
-                          context.push('/engagement/daily-challenge'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: colors.tint,
-                        foregroundColor: colors.buttonForeground,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
+                    Row(
+                      children: [
+                        // const AppLogo(size: 48),
+                        // const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 4),
+                              Text(
+                                'Complete today\'s challenge to maintain your streak',
+                                style: TextStyle(
+                                  color: colors.icon,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                        const SizedBox(width: 16),
+
+                        ElevatedButton(
+                          onPressed: () =>
+                              context.push('/engagement/daily-challenge'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: colors.tint,
+                            foregroundColor: colors.buttonForeground,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 8,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: const Text(
+                            'Start Now',
+                            style: TextStyle(
+                              fontSize: 19,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        'Start Now',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
@@ -138,18 +156,18 @@ class EngagementScreen extends StatelessWidget {
                 'Brain Training Activities',
                 style: TextStyle(
                   color: colors.text,
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 16),
-              Wrap(
+              Column(
                 spacing: 12,
-                runSpacing: 12,
+                // runSpacing: 12,
                 children: [
                   for (final feature in features)
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.44,
+                      // width: MediaQuery.of(context).size.width * 0.44,
                       child: InkWell(
                         onTap: () => context.push(feature.route),
                         child: Container(
@@ -191,7 +209,7 @@ class EngagementScreen extends StatelessWidget {
                                     feature.title,
                                     style: TextStyle(
                                       color: colors.text,
-                                      fontSize: 14,
+                                      fontSize: 19,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -200,7 +218,7 @@ class EngagementScreen extends StatelessWidget {
                                     feature.description,
                                     style: TextStyle(
                                       color: colors.icon,
-                                      fontSize: 12,
+                                      fontSize: 18,
                                       height: 1.3,
                                     ),
                                   ),
@@ -218,7 +236,7 @@ class EngagementScreen extends StatelessWidget {
                 'Brain Health Tips',
                 style: TextStyle(
                   color: colors.text,
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -298,7 +316,7 @@ class _TipCard extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: TextStyle(color: colors.text, fontSize: 14, height: 1.4),
+              style: TextStyle(color: colors.text, fontSize: 19, height: 1.4),
             ),
           ),
         ],

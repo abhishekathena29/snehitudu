@@ -153,7 +153,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
         points: 15,
         completed: false,
         gameData: {
-          'scrambled': 'T A E C H R',
+          'scrambled': 'C E A R H E T',
           'answer': 'teacher',
           'hint': 'Someone who helps you learn',
         },
@@ -284,6 +284,133 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           'hint': 'You read it',
         },
       ),
+      Challenge(
+        id: '16',
+        title: 'Word Scramble: Sweet treat',
+        description: 'Unscramble the letters to form a word',
+        type: 'word',
+        difficulty: 'easy',
+        points: 10,
+        completed: false,
+        gameData: {
+          'scrambled': 'A G S U R',
+          'answer': 'sugar',
+          'hint': 'You add it to your tea',
+        },
+      ),
+      Challenge(
+        id: '17',
+        title: 'Word Scramble: Family',
+        description: 'Unscramble the letters to form a word',
+        type: 'word',
+        difficulty: 'medium',
+        points: 15,
+        completed: false,
+        gameData: {
+          'scrambled': 'D N R G C H I L A',
+          'answer': 'grandchild',
+          'hint': 'A child of your child',
+        },
+      ),
+      Challenge(
+        id: '18',
+        title: 'Number Pattern: Tens',
+        description: 'Complete the sequence: 5, 10, 15, 20, ?',
+        type: 'logic',
+        difficulty: 'easy',
+        points: 10,
+        completed: false,
+        gameData: {
+          'sequence': [5, 10, 15, 20],
+          'answer': 25,
+          'pattern': 'add 5',
+          'hint': 'Each number is 5 more than the last',
+        },
+      ),
+      Challenge(
+        id: '19',
+        title: 'Number Pattern: Doubles',
+        description: 'Complete the sequence: 1, 3, 5, 7, ?',
+        type: 'logic',
+        difficulty: 'easy',
+        points: 10,
+        completed: false,
+        gameData: {
+          'sequence': [1, 3, 5, 7],
+          'answer': 9,
+          'pattern': 'add 2',
+          'hint': 'These are odd numbers in a row',
+        },
+      ),
+      Challenge(
+        id: '20',
+        title: 'Riddle: Days',
+        description: 'What comes once in a year, twice in a week, but never in a day?',
+        type: 'logic',
+        difficulty: 'medium',
+        points: 15,
+        completed: false,
+        gameData: {
+          'riddle':
+              'What comes once in a year, twice in a week, but never in a day?',
+          'answer': 'e',
+          'alternatives': ['letter e', 'the letter e'],
+          'hint': 'Look at the spelling, not the meaning',
+        },
+      ),
+      Challenge(
+        id: '21',
+        title: 'Word Association: Kitchen',
+        description: 'Find a word related to "Kitchen"',
+        type: 'word',
+        difficulty: 'easy',
+        points: 10,
+        completed: false,
+        gameData: {
+          'category': 'Kitchen',
+          'correctAnswers': [
+            'spoon',
+            'plate',
+            'pan',
+            'salt',
+            'sugar',
+            'stove',
+            'fridge',
+            'cup',
+            'knife',
+            'rice',
+            'water',
+            'tea',
+          ],
+          'hint': 'Think about what you use to cook or eat',
+        },
+      ),
+      Challenge(
+        id: '22',
+        title: 'Word Association: Festival',
+        description: 'Find a word related to "Festival"',
+        type: 'word',
+        difficulty: 'easy',
+        points: 10,
+        completed: false,
+        gameData: {
+          'category': 'Festival',
+          'correctAnswers': [
+            'lamp',
+            'sweets',
+            'family',
+            'flowers',
+            'music',
+            'dance',
+            'gift',
+            'food',
+            'temple',
+            'lights',
+            'colors',
+          ],
+          'hint': 'Think about what makes a celebration special',
+        },
+      ),
     ]);
   }
 
@@ -336,11 +463,16 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     if (challenge.type == 'memory' && challenge.id == '3') {
       gameData['currentStep'] = 0;
       gameData['showSequence'] = false;
+      gameData['highlightIndex'] = -1;
     }
     if (challenge.type == 'puzzle') {
       final correct = List<int>.from(gameData['correctOrder']);
-      correct.shuffle(_random);
-      gameData['currentOrder'] = correct;
+      var shuffled = List<int>.from(correct);
+      do {
+        shuffled.shuffle(_random);
+      } while (shuffled.toString() == correct.toString());
+      gameData['currentOrder'] = shuffled;
+      gameData['selectedIndex'] = -1;
     }
     _answerController.clear();
     setState(() {
@@ -365,21 +497,28 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
 
     switch (challenge.type) {
       case 'word':
-        if (challenge.id == '1') {
-          isCorrect = (challenge.gameData['correctAnswers'] as List).contains(
-            userAnswer,
-          );
-        } else if (challenge.id == '7') {
-          isCorrect = userAnswer == challenge.gameData['answer'];
+        final correctList = challenge.gameData['correctAnswers'];
+        if (correctList is List) {
+          isCorrect = correctList
+              .map((e) => e.toString().toLowerCase())
+              .contains(userAnswer);
+        } else if (challenge.gameData['answer'] != null) {
+          final answer = challenge.gameData['answer'].toString().toLowerCase();
+          isCorrect = userAnswer == answer;
         }
         break;
       case 'logic':
-        if (challenge.id == '2') {
-          isCorrect = int.tryParse(userAnswer) == challenge.gameData['answer'];
+        final answer = challenge.gameData['answer'];
+        if (answer is int) {
+          isCorrect = int.tryParse(userAnswer) == answer;
         } else {
-          isCorrect =
-              userAnswer == challenge.gameData['answer'] ||
-              (challenge.gameData['alternatives'] as List).contains(userAnswer);
+          final answerStr = answer.toString().toLowerCase();
+          final alternatives = (challenge.gameData['alternatives'] as List?) ??
+              const <dynamic>[];
+          isCorrect = userAnswer == answerStr ||
+              alternatives
+                  .map((e) => e.toString().toLowerCase())
+                  .contains(userAnswer);
         }
         break;
       case 'puzzle':
@@ -457,12 +596,36 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
       return;
     if (_gameData['showSequence'] == true) return;
 
-    setState(() => _gameData['showSequence'] = true);
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted) {
-        setState(() => _gameData['showSequence'] = false);
-      }
+    final sequence = _gameData['sequence'] as List;
+    setState(() {
+      _gameData['showSequence'] = true;
+      _gameData['highlightIndex'] = -1;
+      _gameData['currentStep'] = 0;
     });
+
+    void flash(int step) {
+      if (!mounted) return;
+      if (step >= sequence.length) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (!mounted) return;
+          setState(() {
+            _gameData['showSequence'] = false;
+            _gameData['highlightIndex'] = -1;
+          });
+        });
+        return;
+      }
+      setState(() => _gameData['highlightIndex'] = sequence[step] as int);
+      Future.delayed(const Duration(milliseconds: 700), () {
+        if (!mounted) return;
+        setState(() => _gameData['highlightIndex'] = -1);
+        Future.delayed(const Duration(milliseconds: 250), () {
+          flash(step + 1);
+        });
+      });
+    }
+
+    flash(0);
   }
 
   void _handleMemorySequenceTap(int index) {
@@ -506,12 +669,24 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     }
   }
 
-  void _handlePuzzleMove(int fromIndex, int toIndex) {
+  void _handlePuzzleTap(int index) {
+    final selected = (_gameData['selectedIndex'] ?? -1) as int;
+    if (selected == -1) {
+      setState(() => _gameData['selectedIndex'] = index);
+      return;
+    }
+    if (selected == index) {
+      setState(() => _gameData['selectedIndex'] = -1);
+      return;
+    }
     final currentOrder = List<int>.from(_gameData['currentOrder']);
-    final temp = currentOrder[fromIndex];
-    currentOrder[fromIndex] = currentOrder[toIndex];
-    currentOrder[toIndex] = temp;
-    setState(() => _gameData['currentOrder'] = currentOrder);
+    final temp = currentOrder[selected];
+    currentOrder[selected] = currentOrder[index];
+    currentOrder[index] = temp;
+    setState(() {
+      _gameData['currentOrder'] = currentOrder;
+      _gameData['selectedIndex'] = -1;
+    });
   }
 
   void _handleStartChallenge() {
@@ -659,7 +834,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                       'Quick Actions',
                       style: TextStyle(
                         color: colors.text,
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -720,7 +895,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                       'This Week',
                       style: TextStyle(
                         color: colors.text,
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -744,7 +919,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                                   fontWeight: _isToday(i)
                                       ? FontWeight.bold
                                       : FontWeight.normal,
-                                  fontSize: 12,
+                                  fontSize: 16,
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -827,7 +1002,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                       challenge.title,
                       style: TextStyle(
                         color: colors.text,
-                        fontSize: 18,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -849,7 +1024,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                             _difficultyLabel(challenge.difficulty),
                             style: TextStyle(
                               color: _difficultyColor(challenge.difficulty),
-                              fontSize: 10,
+                              fontSize: 14,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -872,7 +1047,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           const SizedBox(height: 16),
           Text(
             challenge.description,
-            style: TextStyle(color: colors.icon, fontSize: 16, height: 1.4),
+            style: TextStyle(color: colors.icon, fontSize: 19, height: 1.4),
           ),
           const SizedBox(height: 20),
           if (isCompletedToday)
@@ -1023,31 +1198,60 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           challenge.title,
           style: TextStyle(
             color: colors.text,
-            fontSize: 20,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
         Text(
           challenge.description,
-          style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4),
+          style: TextStyle(color: colors.icon, fontSize: 19, height: 1.4),
         ),
-        const SizedBox(height: 12),
-        if (challenge.id == '1')
-          Text(
-            'Hint: ${challenge.gameData['hint']}',
-            style: TextStyle(color: colors.tint, fontSize: 12),
+        const SizedBox(height: 14),
+        if (challenge.gameData['scrambled'] != null)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+            margin: const EdgeInsets.only(bottom: 14),
+            decoration: BoxDecoration(
+              color: colors.tint.withOpacity(0.12),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Text(
+              challenge.gameData['scrambled'].toString(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: colors.tint,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 4,
+              ),
+            ),
           ),
-        const SizedBox(height: 12),
+        if (challenge.gameData['category'] != null)
+          Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: colors.tint.withOpacity(0.10),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Text(
+              'Category: ${challenge.gameData['category']}',
+              style: TextStyle(
+                  color: colors.tint, fontSize: 17, fontWeight: FontWeight.w600),
+            ),
+          ),
+        const SizedBox(height: 4),
         _answerField(colors),
         const SizedBox(height: 12),
         _gameButtons(colors),
-        if (_showHint)
+        if (_showHint && challenge.gameData['hint'] != null)
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Text(
-              challenge.gameData['hint'],
-              style: TextStyle(color: colors.tint),
+              challenge.gameData['hint'].toString(),
+              style: TextStyle(color: colors.tint, fontSize: 17),
             ),
           ),
       ],
@@ -1062,14 +1266,14 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           challenge.title,
           style: TextStyle(
             color: colors.text,
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
         Text(
           challenge.description,
-          style: TextStyle(color: colors.icon, fontSize: 14, height: 1.4),
+          style: TextStyle(color: colors.icon, fontSize: 17, height: 1.4),
         ),
         const SizedBox(height: 12),
         if (challenge.id == '2')
@@ -1118,6 +1322,17 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
     final colorsList = _gameData['colors'] as List;
     final currentStep = _gameData['currentStep'] as int;
     final showSequence = _gameData['showSequence'] as bool;
+    final highlightIndex = (_gameData['highlightIndex'] ?? -1) as int;
+
+    String instruction;
+    if (showSequence) {
+      instruction = 'Watch carefully…';
+    } else if (currentStep == 0) {
+      instruction = 'Tap "Start Sequence" to see the pattern.';
+    } else {
+      instruction =
+          'Now tap the colors in the same order. Step ${currentStep + 1} of ${sequence.length}.';
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1126,60 +1341,79 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           'Memory Sequence',
           style: TextStyle(
             color: colors.text,
-            fontSize: 20,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
         Text(
-          'Watch the sequence and repeat it!',
-          style: TextStyle(color: colors.icon, fontSize: 14),
+          instruction,
+          style: TextStyle(color: colors.icon, fontSize: 19, height: 1.4),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 18),
         Wrap(
-          spacing: 10,
-          runSpacing: 10,
+          spacing: 14,
+          runSpacing: 14,
           children: [
             for (int index = 0; index < colorsList.length; index++)
               GestureDetector(
                 onTap: showSequence
                     ? null
                     : () => _handleMemorySequenceTap(index),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.15,
-                  height: MediaQuery.of(context).size.width * 0.15,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 150),
+                  width: MediaQuery.of(context).size.width * 0.16,
+                  height: MediaQuery.of(context).size.width * 0.16,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: _parseColor(colorsList[index]).withOpacity(
-                      showSequence && sequence[currentStep] == index ? 1 : 0.3,
+                      highlightIndex == index ? 1 : 0.35,
                     ),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: highlightIndex == index
+                        ? [
+                            BoxShadow(
+                              color: _parseColor(colorsList[index])
+                                  .withOpacity(0.5),
+                              blurRadius: 14,
+                              spreadRadius: 2,
+                            ),
+                          ]
+                        : null,
                   ),
                   child: Text(
                     '${index + 1}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 22,
                     ),
                   ),
                 ),
               ),
           ],
         ),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: _startMemorySequence,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: colors.tint,
-            foregroundColor: colors.buttonForeground,
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+        const SizedBox(height: 18),
+        SizedBox(
+          width: double.infinity,
+          height: 56,
+          child: ElevatedButton(
+            onPressed: showSequence ? null : _startMemorySequence,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colors.tint,
+              foregroundColor: colors.buttonForeground,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
             ),
-          ),
-          child: Text(
-            showSequence ? 'Watching...' : 'Start Sequence',
-            style: const TextStyle(fontWeight: FontWeight.w600),
+            child: Text(
+              showSequence
+                  ? 'Watching…'
+                  : (currentStep == 0 ? 'Start Sequence' : 'Replay Sequence'),
+              style: const TextStyle(
+                  fontSize: 20, fontWeight: FontWeight.w600),
+            ),
           ),
         ),
       ],
@@ -1188,6 +1422,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
 
   Widget _buildPuzzleGame(AppThemeColors colors) {
     final currentOrder = _gameData['currentOrder'] as List;
+    final selectedIndex = (_gameData['selectedIndex'] ?? -1) as int;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1195,60 +1430,67 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
           'Number Puzzle',
           style: TextStyle(
             color: colors.text,
-            fontSize: 20,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
         Text(
-          'Arrange the numbers in ascending order',
-          style: TextStyle(color: colors.icon, fontSize: 14),
+          'Tap one tile, then tap another to swap them. Arrange 1 to 9 in order.',
+          style: TextStyle(color: colors.icon, fontSize: 19, height: 1.4),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 18),
         Wrap(
-          spacing: 10,
-          runSpacing: 10,
+          spacing: 12,
+          runSpacing: 12,
           children: [
             for (int index = 0; index < currentOrder.length; index++)
               GestureDetector(
-                onTap: () {
-                  final nextIndex = (index + 1) % currentOrder.length;
-                  _handlePuzzleMove(index, nextIndex);
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.15,
-                  height: MediaQuery.of(context).size.width * 0.15,
+                onTap: () => _handlePuzzleTap(index),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 120),
+                  width: MediaQuery.of(context).size.width * 0.18,
+                  height: MediaQuery.of(context).size.width * 0.18,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: colors.tint,
-                    borderRadius: BorderRadius.circular(10),
+                    color: selectedIndex == index
+                        ? const Color(0xFFFFC857)
+                        : colors.tint,
+                    borderRadius: BorderRadius.circular(14),
+                    border: selectedIndex == index
+                        ? Border.all(color: Colors.white, width: 3)
+                        : null,
                   ),
                   child: Text(
                     currentOrder[index].toString(),
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 24,
                     ),
                   ),
                 ),
               ),
           ],
         ),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: _handleGameSubmit,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: colors.tint,
-            foregroundColor: colors.buttonForeground,
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+        const SizedBox(height: 18),
+        SizedBox(
+          width: double.infinity,
+          height: 56,
+          child: ElevatedButton(
+            onPressed: _handleGameSubmit,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: colors.tint,
+              foregroundColor: colors.buttonForeground,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
             ),
-          ),
-          child: const Text(
-            'Check Solution',
-            style: TextStyle(fontWeight: FontWeight.w600),
+            child: const Text(
+              'Check Solution',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            ),
           ),
         ),
       ],

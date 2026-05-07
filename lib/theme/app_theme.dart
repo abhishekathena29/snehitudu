@@ -66,73 +66,155 @@ class AppThemeColors extends ThemeExtension<AppThemeColors> {
 }
 
 class AppTheme {
+  // High-contrast palette.
   static const AppThemeColors lightColors = AppThemeColors(
-    text: Color(0xFF11181C),
+    text: Color(0xFF0B1014),
     background: Color(0xFFFFFFFF),
-    tint: Color(0xFF0A7EA4),
+    tint: Color(0xFF055D85),
     buttonForeground: Color(0xFFFFFFFF),
-    icon: Color(0xFF687076),
-    tabIconDefault: Color(0xFF687076),
-    tabIconSelected: Color(0xFF0A7EA4),
+    icon: Color(0xFF3D464C),
+    tabIconDefault: Color(0xFF3D464C),
+    tabIconSelected: Color(0xFF055D85),
   );
 
   static const AppThemeColors darkColors = AppThemeColors(
-    text: Color(0xFFECEDEE),
-    background: Color(0xFF151718),
+    text: Color(0xFFF7F8F8),
+    background: Color(0xFF0F1416),
     tint: Color(0xFFFFFFFF),
-    buttonForeground: Color(0xFF151718),
-    icon: Color(0xFF9BA1A6),
-    tabIconDefault: Color(0xFF9BA1A6),
+    buttonForeground: Color(0xFF0F1416),
+    icon: Color(0xFFD8DCDE),
+    tabIconDefault: Color(0xFFD8DCDE),
     tabIconSelected: Color(0xFFFFFFFF),
   );
 
-  static ThemeData get lightTheme {
-    return ThemeData(
-      brightness: Brightness.light,
-      useMaterial3: true,
-      scaffoldBackgroundColor: lightColors.background,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: lightColors.tint,
-        brightness: Brightness.light,
-        background: lightColors.background,
-      ),
-      textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 14)).apply(
-        bodyColor: lightColors.text,
-        displayColor: lightColors.text,
-        fontFamily: 'SpaceMono',
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: lightColors.tint,
-          foregroundColor: lightColors.buttonForeground,
-        ),
-      ),
-      extensions: const [lightColors],
+  // Senior-friendly type scale: minimum body text is 19, comfortable line
+  // height, generous letter spacing on small labels.
+  static TextTheme _textTheme(Color body) {
+    const family = 'SpaceMono';
+    return TextTheme(
+      displayLarge: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, fontFamily: family, color: body),
+      displayMedium: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, fontFamily: family, color: body),
+      displaySmall: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, fontFamily: family, color: body),
+      headlineLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, fontFamily: family, color: body),
+      headlineMedium: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, fontFamily: family, color: body),
+      headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, fontFamily: family, color: body),
+      titleLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, fontFamily: family, color: body),
+      titleMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, fontFamily: family, color: body),
+      titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, fontFamily: family, color: body),
+      bodyLarge: TextStyle(fontSize: 22, height: 1.5, fontFamily: family, color: body),
+      bodyMedium: TextStyle(fontSize: 20, height: 1.5, fontFamily: family, color: body),
+      bodySmall: TextStyle(fontSize: 18, height: 1.4, fontFamily: family, color: body),
+      labelLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, fontFamily: family, color: body),
+      labelMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, fontFamily: family, color: body),
+      labelSmall: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, fontFamily: family, color: body),
     );
   }
 
-  static ThemeData get darkTheme {
+  static ThemeData _build({
+    required Brightness brightness,
+    required AppThemeColors c,
+  }) {
     return ThemeData(
-      brightness: Brightness.dark,
+      brightness: brightness,
       useMaterial3: true,
-      scaffoldBackgroundColor: darkColors.background,
+      scaffoldBackgroundColor: c.background,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: darkColors.tint,
-        brightness: Brightness.dark,
-        background: darkColors.background,
+        seedColor: c.tint,
+        brightness: brightness,
+        background: c.background,
       ),
-      textTheme: const TextTheme(bodyMedium: TextStyle(fontSize: 14)).apply(
-        bodyColor: darkColors.text,
-        displayColor: darkColors.text,
-        fontFamily: 'SpaceMono',
-      ),
+      // Generous spacing helps for shaky / imprecise touches.
+      visualDensity: const VisualDensity(horizontal: 1, vertical: 1),
+      materialTapTargetSize: MaterialTapTargetSize.padded,
+      splashFactory: InkSparkle.splashFactory,
+      textTheme: _textTheme(c.text),
+      iconTheme: IconThemeData(size: 30, color: c.text),
+      primaryIconTheme: IconThemeData(size: 30, color: c.text),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: darkColors.tint,
-          foregroundColor: darkColors.buttonForeground,
+          backgroundColor: c.tint,
+          foregroundColor: c.buttonForeground,
+          minimumSize: const Size(72, 64),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          elevation: 1,
+        ).copyWith(
+          // Stronger pressed feedback for hand-eye-coordination assistance.
+          overlayColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.pressed)) {
+              return Colors.white.withOpacity(0.18);
+            }
+            return null;
+          }),
         ),
       ),
-      extensions: const [darkColors],
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          foregroundColor: c.tint,
+          minimumSize: const Size(72, 64),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          side: BorderSide(color: c.tint, width: 2),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: c.tint,
+          minimumSize: const Size(64, 56),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        ),
+      ),
+      iconButtonTheme: IconButtonThemeData(
+        style: IconButton.styleFrom(
+          minimumSize: const Size(56, 56),
+          iconSize: 30,
+          padding: const EdgeInsets.all(12),
+        ),
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: c.background,
+        foregroundColor: c.text,
+        toolbarHeight: 72,
+        titleTextStyle: TextStyle(
+          color: c.text,
+          fontSize: 26,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'SpaceMono',
+        ),
+        iconTheme: IconThemeData(color: c.text, size: 30),
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: c.background,
+        selectedItemColor: c.tint,
+        unselectedItemColor: c.tabIconDefault,
+        selectedIconTheme: const IconThemeData(size: 32),
+        unselectedIconTheme: const IconThemeData(size: 30),
+        selectedLabelStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+        unselectedLabelStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: c.background,
+        titleTextStyle: TextStyle(
+          color: c.text,
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'SpaceMono',
+        ),
+        contentTextStyle: TextStyle(
+          color: c.text,
+          fontSize: 19,
+          height: 1.5,
+          fontFamily: 'SpaceMono',
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
+      extensions: [c],
     );
   }
+
+  static ThemeData get lightTheme => _build(brightness: Brightness.light, c: lightColors);
+  static ThemeData get darkTheme => _build(brightness: Brightness.dark, c: darkColors);
 }
