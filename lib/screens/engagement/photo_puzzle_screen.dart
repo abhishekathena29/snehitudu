@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:flutter_ionicons/flutter_ionicons.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/memory_photo_service.dart';
@@ -154,7 +154,7 @@ class _PhotoPuzzleScreenState extends State<PhotoPuzzleScreen> {
                         color: const Color(0xFFE76F51),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Icon(Ionicons.images_outline, color: Colors.white, size: 32),
+                      child: Icon(Ionicons.images_outline, color: Colors.white, size: 32),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -188,18 +188,18 @@ class _PhotoPuzzleScreenState extends State<PhotoPuzzleScreen> {
                 children: [
                   ElevatedButton.icon(
                     onPressed: _pickFromGallery,
-                    icon: const Icon(Ionicons.images_outline),
+                    icon: Icon(Ionicons.images_outline),
                     label: const Text('Add from gallery'),
                   ),
                   ElevatedButton.icon(
                     onPressed: _pickFromCamera,
-                    icon: const Icon(Ionicons.camera_outline),
+                    icon: Icon(Ionicons.camera_outline),
                     label: const Text('Take a photo'),
                   ),
                   if (hasPhoto)
                     OutlinedButton.icon(
                       onPressed: () => _start(_activePhoto!),
-                      icon: const Icon(Ionicons.refresh_outline),
+                      icon: Icon(Ionicons.refresh_outline),
                       label: const Text('Shuffle again'),
                     ),
                 ],

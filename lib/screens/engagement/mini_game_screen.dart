@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:flutter_ionicons/flutter_ionicons.dart';
 
 import '../../theme/app_theme.dart';
 
@@ -347,7 +347,7 @@ class _MiniGameScreenState extends State<MiniGameScreen> {
                       height: 56,
                       child: OutlinedButton.icon(
                         onPressed: _resetGame,
-                        icon: const Icon(Ionicons.refresh_outline, size: 22),
+                        icon: Icon(Ionicons.refresh_outline, size: 22),
                         label: const Text('New Round', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
                       ),
                     ),

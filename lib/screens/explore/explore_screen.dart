@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:flutter_ionicons/flutter_ionicons.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/hobby_item.dart';
@@ -228,12 +228,12 @@ class _AddPhotoActions extends StatelessWidget {
       children: [
         ElevatedButton.icon(
           onPressed: () => _pick(context, false),
-          icon: const Icon(Ionicons.images_outline),
+          icon: Icon(Ionicons.images_outline),
           label: const Text('Add from gallery'),
         ),
         ElevatedButton.icon(
           onPressed: () => _pick(context, true),
-          icon: const Icon(Ionicons.camera_outline),
+          icon: Icon(Ionicons.camera_outline),
           label: const Text('Take a photo'),
         ),
       ],
@@ -320,19 +320,19 @@ class _PhotoTile extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(Ionicons.create_outline, size: 28),
+                leading: Icon(Ionicons.create_outline, size: 28),
                 title: const Text('Add a name', style: TextStyle(fontSize: 19)),
                 onTap: () => Navigator.of(ctx).pop('rename'),
               ),
               ListTile(
                 leading:
-                    const Icon(Ionicons.extension_puzzle_outline, size: 28),
+                    Icon(Ionicons.extension_puzzle_outline, size: 28),
                 title:
                     const Text('Make a puzzle', style: TextStyle(fontSize: 19)),
                 onTap: () => Navigator.of(ctx).pop('puzzle'),
               ),
               ListTile(
-                leading: const Icon(Ionicons.trash_outline,
+                leading: Icon(Ionicons.trash_outline,
                     size: 28, color: Color(0xFFE53935)),
                 title: const Text('Remove',
                     style:

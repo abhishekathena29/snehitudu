@@ -37,9 +37,9 @@ dependencies:
   provider:
   go_router:
   shared_preferences:
-  ionicons:
   image_picker:
   path_provider:
+  flutter_ionicons:
 
 dev_dependencies:
   flutter_test:

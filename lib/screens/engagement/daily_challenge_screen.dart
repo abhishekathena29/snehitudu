@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:flutter_ionicons/flutter_ionicons.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../models/challenge.dart';
@@ -1092,7 +1092,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    icon: const Icon(Ionicons.refresh, size: 20),
+                    icon: Icon(Ionicons.refresh, size: 20),
                     label: const Text(
                       'Play Again',
                       style: TextStyle(fontWeight: FontWeight.w600),
@@ -1112,7 +1112,7 @@ class _DailyChallengeScreenState extends State<DailyChallengeScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              icon: const Icon(Ionicons.play_outline, size: 20),
+              icon: Icon(Ionicons.play_outline, size: 20),
               label: const Text(
                 'Start Challenge',
                 style: TextStyle(fontWeight: FontWeight.w600),
